@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Board - VisionFlow 2026</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+
+    <style>
+        /* Vision Board Specific Styles */
+        .board-container {
+            min-height: 80vh;
+            padding: 2rem;
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 2px dashed var(--border-color);
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-auto-rows: 200px;
+            gap: 1rem;
+            transition: var(--transition-normal);
+        }
+
+        .board-container.drag-over {
+            border-color: var(--primary);
+            background-color: rgba(var(--primary-hue), 100%, 65%, 0.05);
+        }
+
+        .board-item {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            cursor: move;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-fast);
+            background: var(--bg-card);
+        }
+
+        .board-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .board-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            /* Prevent default image drag */
+        }
+
+        .board-item__content {
+            padding: 1rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .board-item__delete {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition-fast);
+            font-size: 0.8rem;
+        }
+
+        .board-item:hover .board-item__delete {
+            opacity: 1;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .toolbar__group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .toolbar__divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border-color);
+            margin: 0 0.5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal__content {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
+            transform: translateY(20px);
+            transition: var(--transition-normal);
+        }
+
+        .modal.active .modal__content {
+            transform: translateY(0);
+        }
+
+        .modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal__close {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(var(--primary-hue), 100%, 65%, 0.2);
+        }
+
+        .file-drop-area {
+            border: 2px dashed var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .file-drop-area:hover {
+            border-color: var(--primary);
+            background: rgba(var(--primary-hue), 100%, 65%, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container navbar__container">
+            <a href="../index.html" class="navbar__logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="text-gradient">VisionFlow</span>
+            </a>
+
+            <div class="navbar__menu" id="navbar-menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
+                    <li class="navbar__item"><a href="vision-board.html" class="navbar__link active">Vision Board</a>
+                    </li>
+                    <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link">Yılbaşı Kavanozu</a></li>
+                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
+                    <li class="navbar__item"><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
+                </ul>
+                <button class="navbar__close" id="navbar-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="navbar__actions">
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="user-avatar">
+                    <span class="user-name">Misafir</span>
+                </div>
+                <button class="navbar__toggle" id="navbar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
+        <div class="container">
+            <div class="section__header" style="margin-bottom: 2rem; text-align: left; max-width: 100%;">
+                <h1 class="section__title">Vision Board <span class="text-gradient">2026</span></h1>
+                <p class="section__description">Hayallerini buraya sürükle ve geleceğini tasarla.</p>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar fade-in-up">
+                <div class="toolbar__group">
+                    <button class="btn btn--primary btn--sm" id="add-image-btn">
+                        <i class="fa-solid fa-image"></i> Resim Ekle
+                    </button>
+                    <button class="btn btn--outline btn--sm" id="add-text-btn">
+                        <i class="fa-solid fa-font"></i> Not Ekle
+                    </button>
+                </div>
+
+                <div class="toolbar__divider"></div>
+
+                <div class="toolbar__group">
+                    <button class="btn btn--outline btn--sm" id="clear-board-btn">
+                        <i class="fa-solid fa-trash"></i> Temizle
+                    </button>
+                    <button class="btn btn--outline btn--sm" id="save-board-btn">
+                        <i class="fa-solid fa-save"></i> Kaydet
+                    </button>
+                </div>
+            </div>
+
+            <!-- Board Area -->
+            <div class="board-container fade-in-up delay-100" id="vision-board">
+                <!-- Items will be added here dynamically -->
+                <div class="board-item" draggable="true">
+                    <img src="https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2?auto=format&fit=crop&w=400&q=80"
+                        alt="Sample">
+                    <div class="board-item__delete"><i class="fa-solid fa-times"></i></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Image Modal -->
+    <div class="modal" id="image-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title">Resim Ekle</h3>
+                <i class="fa-solid fa-times modal__close" id="close-image-modal"></i>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Resim URL</label>
+                <input type="text" class="form-input" id="image-url-input" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Veya Dosya Yükle</label>
+                <div class="file-drop-area">
+                    <i class="fa-solid fa-cloud-upload-alt"
+                        style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary);"></i>
+                    <p>Dosyayı buraya sürükleyin veya tıklayın</p>
+                    <input type="file" id="image-file-input" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            <button class="btn btn--primary" style="width: 100%;" id="confirm-add-image">Ekle</button>
+        </div>
+    </div>
+
+    <!-- Add Text Modal -->
+    <div class="modal" id="text-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title">Not Ekle</h3>
+                <i class="fa-solid fa-times modal__close" id="close-text-modal"></i>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Notunuz</label>
+                <textarea class="form-input" id="text-input" rows="4" placeholder="Hedefim..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Renk</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <div class="color-option"
+                        style="width: 30px; height: 30px; border-radius: 50%; background: var(--cat-health); cursor: pointer;">
+                    </div>
+                    <div class="color-option"
+                        style="width: 30px; height: 30px; border-radius: 50%; background: var(--cat-career); cursor: pointer;">
+                    </div>
+                    <div class="color-option"
+                        style="width: 30px; height: 30px; border-radius: 50%; background: var(--cat-finance); cursor: pointer;">
+                    </div>
+                    <div class="color-option"
+                        style="width: 30px; height: 30px; border-radius: 50%; background: var(--cat-relationships); cursor: pointer;">
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn--primary" style="width: 100%;" id="confirm-add-text">Ekle</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/modules/visionboard.js"></script>
+</body>
+
+</html>

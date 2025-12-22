@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlerleme Panosu - VisionFlow 2026</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-card__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .dashboard-card__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: rgba(var(--primary-hue), 100%, 65%, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Level Card */
+        .level-card {
+            background: var(--gradient-primary);
+            color: white;
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.5rem;
+        }
+
+        .level-info h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .level-info p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .level-progress {
+            flex: 1;
+            max-width: 400px;
+            margin-left: 3rem;
+        }
+
+        .level-bar-container {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .level-bar-fill {
+            height: 100%;
+            background: white;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .level-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Streak */
+        .streak-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .streak-count {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-3);
+        }
+
+        .streak-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Activity List */
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-content h4 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Quote */
+        .quote-card {
+            background: linear-gradient(135deg, var(--bg-card), rgba(var(--primary-hue), 100%, 65%, 0.05));
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quote-text {
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .level-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+                padding: 2rem;
+            }
+
+            .level-progress {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container navbar__container">
+            <a href="../index.html" class="navbar__logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="text-gradient">VisionFlow</span>
+            </a>
+
+            <div class="navbar__menu" id="navbar-menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
+                    <li class="navbar__item"><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
+                    <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link">Yılbaşı Kavanozu</a></li>
+                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
+                    <li class="navbar__item"><a href="dashboard.html" class="navbar__link active">İlerleme</a></li>
+                </ul>
+                <button class="navbar__close" id="navbar-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="navbar__actions">
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="user-avatar">
+                    <span class="user-name">Misafir</span>
+                </div>
+                <button class="navbar__toggle" id="navbar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
+        <div class="container">
+            <div class="section__header" style="margin-bottom: 2rem; text-align: left;">
+                <h1 class="section__title">İlerleme <span class="text-gradient">Panosu</span></h1>
+                <p class="section__description">Gelişimini takip et, seviye atla ve motive kal.</p>
+            </div>
+
+            <div class="dashboard-grid fade-in-up">
+                <!-- Level Card -->
+                <div class="dashboard-card level-card">
+                    <div class="level-info">
+                        <p>Mevcut Seviye</p>
+                        <h2 id="user-level">Başlangıç</h2>
+                        <p id="total-points">0 Puan</p>
+                    </div>
+                    <div class="level-progress">
+                        <div class="level-bar-container">
+                            <div class="level-bar-fill" id="level-progress-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="level-text">
+                            <span>Sonraki Seviye</span>
+                            <span id="points-needed">100 Puan Kaldı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Streak Card -->
+                <div class="dashboard-card">
+                    <div class="dashboard-card__header">
+                        <h3 class="dashboard-card__title">Günlük Seri</h3>
+                        <div class="dashboard-card__icon"><i class="fa-solid fa-fire"></i></div>
+                    </div>
+                    <div class="streak-container">
+                        <span class="streak-count" id="streak-count">1</span>
+                        <span class="streak-label">Gün<br>Üst Üste</span>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">Her gün giriş yaparak
+                        serini koru!</p>
+                </div>
+
+                <!-- Stats Summary -->
+                <div class="dashboard-card">
+                    <div class="dashboard-card__header">
+                        <h3 class="dashboard-card__title">Genel Bakış</h3>
+                        <div class="dashboard-card__icon"><i class="fa-solid fa-chart-pie"></i></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Vision Board Öğeleri</span>
+                            <span id="stats-vision-count" style="font-weight: 600;">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Kavanoz Notları</span>
+                            <span id="stats-jar-count" style="font-weight: 600;">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Tamamlanan Hedefler</span>
+                            <span id="stats-goals-completed" style="font-weight: 600; color: var(--primary);">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Quote -->
+                <div class="dashboard-card quote-card">
+                    <div class="quote-text" id="daily-quote">
+                        "Gelecek, bugünden hazırlananlara aittir."
+                    </div>
+                    <div class="quote-author" id="quote-author">
+                        - Malcolm X
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="dashboard-card" style="grid-column: 1 / -1;">
+                    <div class="dashboard-card__header">
+                        <h3 class="dashboard-card__title">Son Aktiviteler</h3>
+                        <div class="dashboard-card__icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    </div>
+                    <ul class="activity-list" id="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon"><i class="fa-solid fa-user"></i></div>
+                            <div class="activity-content">
+                                <h4>VisionFlow'a Hoş Geldin!</h4>
+                                <span class="activity-time">Az önce</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/modules/gamification.js"></script>
+</body>
+
+</html>

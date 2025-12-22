@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionFlow 2026 - Hayallerini Tasarla</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container navbar__container">
+            <a href="index.html" class="navbar__logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="text-gradient">VisionFlow</span>
+            </a>
+            
+            <div class="navbar__menu" id="navbar-menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a href="index.html" class="navbar__link active">Ana Sayfa</a></li>
+                    <li class="navbar__item"><a href="pages/vision-board.html" class="navbar__link">Vision Board</a></li>
+                    <li class="navbar__item"><a href="pages/new-year-jar.html" class="navbar__link">Yılbaşı Kavanozu</a></li>
+                    <li class="navbar__item"><a href="pages/yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
+                    <li class="navbar__item"><a href="pages/dashboard.html" class="navbar__link">İlerleme</a></li>
+                </ul>
+                <button class="navbar__close" id="navbar-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="navbar__actions">
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="user-avatar">
+                    <span class="user-name">Misafir</span>
+                </div>
+                <button class="navbar__toggle" id="navbar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero section">
+        <div class="container hero__container">
+            <div class="hero__content">
+                <div class="hero__badge fade-in-up">
+                    <i class="fa-solid fa-star"></i> 2026 Hedeflerine Hazır Mısın?
+                </div>
+                <h1 class="hero__title fade-in-up delay-100">
+                    Hayallerini <br>
+                    <span class="text-gradient">Görselleştir & Gerçekleştir</span>
+                </h1>
+                <p class="hero__description fade-in-up delay-200">
+                    VisionFlow 2026 ile hedeflerini belirle, vizyon panonu oluştur ve oyunlaştırılmış sistemle motivasyonunu her zaman yüksek tut. Geleceğini şansa bırakma, onu tasarla.
+                </p>
+                <div class="hero__buttons fade-in-up delay-300">
+                    <a href="pages/vision-board.html" class="btn btn--primary">
+                        Hemen Başla <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#features" class="btn btn--outline">
+                        Daha Fazla Bilgi
+                    </a>
+                </div>
+                
+                <div class="hero__stats fade-in-up delay-400">
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Ücretsiz</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">4+</span>
+                        <span class="stat-label">Modül</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Motivasyon</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero__image fade-in-left delay-200">
+                <div class="hero__blob"></div>
+                <!-- Placeholder for hero image/illustration -->
+                <div class="hero__card glass">
+                    <div class="hero__card-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="hero__card-content">
+                        <h3>Hedef Odaklı</h3>
+                        <p>SMART hedeflerle başarıya ulaş</p>
+                    </div>
+                </div>
+                <div class="hero__card glass hero__card--2">
+                    <div class="hero__card-icon"><i class="fa-solid fa-image"></i></div>
+                    <div class="hero__card-content">
+                        <h3>Görsel Vizyon</h3>
+                        <p>Hayallerini resimlerle anlat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features section" id="features">
+        <div class="container">
+            <div class="section__header fade-in-up">
+                <span class="section__subtitle"><i class="fa-solid fa-bolt"></i> Özellikler</span>
+                <h2 class="section__title">Potansiyelini <span class="text-gradient">Keşfet</span></h2>
+                <p class="section__description">VisionFlow, hedeflerine ulaşman için ihtiyacın olan tüm araçları tek bir platformda sunar.</p>
+            </div>
+            
+            <div class="features__grid">
+                <!-- Feature 1: Vision Board -->
+                <div class="feature-card glass fade-in-up delay-100">
+                    <div class="feature-card__icon-wrapper">
+                        <i class="fa-solid fa-palette feature-card__icon"></i>
+                    </div>
+                    <h3 class="feature-card__title">Vision Board</h3>
+                    <p class="feature-card__description">
+                        Hayallerini görselleştir. Sürükle-bırak arayüzü ile kendi vizyon panonu oluştur, resimler ve motivasyon sözleri ekle.
+                    </p>
+                    <a href="pages/vision-board.html" class="feature-card__link">Keşfet <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <!-- Feature 2: New Year Jar -->
+                <div class="feature-card glass fade-in-up delay-200">
+                    <div class="feature-card__icon-wrapper">
+                        <i class="fa-solid fa-jar feature-card__icon"></i>
+                    </div>
+                    <h3 class="feature-card__title">Yılbaşı Kavanozu</h3>
+                    <p class="feature-card__description">
+                        Anılarını, başarılarını ve minnettarlıklarını sanal bir kavanozda biriktir. Yıl sonunda hepsini tek tek hatırla.
+                    </p>
+                    <a href="pages/new-year-jar.html" class="feature-card__link">Kavanoza Git <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <!-- Feature 3: Yearly Goals -->
+                <div class="feature-card glass fade-in-up delay-300">
+                    <div class="feature-card__icon-wrapper">
+                        <i class="fa-solid fa-list-check feature-card__icon"></i>
+                    </div>
+                    <h3 class="feature-card__title">Yıllık Hedefler</h3>
+                    <p class="feature-card__description">
+                        SMART hedefler belirle, alt görevlere böl ve ilerlemeni takip et. Başarılarını kutla ve rozetler kazan.
+                    </p>
+                    <a href="pages/yearly-goals.html" class="feature-card__link">Hedef Belirle <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="steps section">
+        <div class="container">
+            <div class="section__header fade-in-up">
+                <span class="section__subtitle"><i class="fa-solid fa-shoe-prints"></i> Nasıl Çalışır?</span>
+                <h2 class="section__title">Başarıya Giden <span class="text-gradient">3 Adım</span></h2>
+            </div>
+            
+            <div class="steps__wrapper">
+                <div class="step-item fade-in-up delay-100">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Vizyonunu Belirle</h3>
+                        <p>Ne istediğine karar ver ve bunu Vision Board üzerinde görselleştir.</p>
+                    </div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item fade-in-up delay-200">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Planla ve Takip Et</h3>
+                        <p>Büyük hedeflerini küçük, yönetilebilir parçalara böl ve ilerlemeni kaydet.</p>
+                    </div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item fade-in-up delay-300">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Kutla ve Motive Ol</h3>
+                        <p>Her başarını kutla, puanlar topla ve motivasyonunu hep yüksek tut.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__content">
+                <a href="#" class="footer__logo">
+                    <i class="fa-solid fa-layer-group"></i> VisionFlow
+                </a>
+                <p class="footer__text">
+                    2026 hedeflerine ulaşman için tasarlanmış kişisel gelişim platformu.
+                </p>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="footer__social-link"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="footer__social-link"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="footer__social-link"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 VisionFlow. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yılbaşı Kavanozu - VisionFlow 2026</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+
+    <style>
+        /* Jar Specific Styles */
+        .jar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            position: relative;
+        }
+
+        .jar {
+            width: 200px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px 20px 40px 40px;
+            position: relative;
+            backdrop-filter: blur(5px);
+            box-shadow:
+                0 0 20px rgba(255, 255, 255, 0.1),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .jar::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .jar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(var(--primary-hue), 100%, 65%, 0.3);
+        }
+
+        .jar-note {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transform: rotate(var(--rotation));
+            bottom: var(--bottom);
+            left: var(--left);
+            opacity: 0.9;
+            transition: var(--transition-normal);
+        }
+
+        .jar-note:hover {
+            z-index: 10;
+            transform: scale(1.5) rotate(0deg);
+        }
+
+        .jar-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .note-form {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .category-select {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container navbar__container">
+            <a href="../index.html" class="navbar__logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="text-gradient">VisionFlow</span>
+            </a>
+
+            <div class="navbar__menu" id="navbar-menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
+                    <li class="navbar__item"><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
+                    <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link active">Yılbaşı
+                            Kavanozu</a></li>
+                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
+                    <li class="navbar__item"><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
+                </ul>
+                <button class="navbar__close" id="navbar-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="navbar__actions">
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="user-avatar">
+                    <span class="user-name">Misafir</span>
+                </div>
+                <button class="navbar__toggle" id="navbar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
+        <div class="container">
+            <div class="section__header">
+                <h1 class="section__title">Yılbaşı <span class="text-gradient">Kavanozu</span></h1>
+                <p class="section__description">Anılarını, başarılarını ve minnettarlıklarını burada biriktir.</p>
+            </div>
+
+            <div class="jar-container fade-in-up">
+                <div class="jar" id="memory-jar">
+                    <!-- Notes will be added here -->
+                </div>
+
+                <div class="jar-controls">
+                    <button class="btn btn--primary" id="add-note-btn">
+                        <i class="fa-solid fa-plus"></i> Not Ekle
+                    </button>
+                    <button class="btn btn--outline" id="shake-jar-btn">
+                        <i class="fa-solid fa-shuffle"></i> Karıştır & Rastgele Seç
+                    </button>
+                </div>
+            </div>
+
+            <!-- Add Note Modal/Form Area (Hidden by default, shown in modal) -->
+            <div class="modal" id="note-modal">
+                <div class="modal__content">
+                    <div class="modal__header">
+                        <h3 class="modal__title">Kavanoza Not At</h3>
+                        <i class="fa-solid fa-times modal__close" id="close-note-modal"></i>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Kategori</label>
+                        <div class="category-select" id="category-select">
+                            <button class="category-btn active" data-color="var(--accent-1)"
+                                data-cat="memory">Anı</button>
+                            <button class="category-btn" data-color="var(--accent-2)"
+                                data-cat="achievement">Başarı</button>
+                            <button class="category-btn" data-color="var(--accent-3)"
+                                data-cat="gratitude">Minnettarlık</button>
+                            <button class="category-btn" data-color="var(--accent-4)" data-cat="goal">Hedef</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Notun</label>
+                        <textarea class="form-input" id="note-text" rows="4"
+                            placeholder="Bugün harika bir şey oldu..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tarih</label>
+                        <input type="date" class="form-input" id="note-date">
+                    </div>
+
+                    <button class="btn btn--primary" style="width: 100%;" id="confirm-add-note">Kavanoza At</button>
+                </div>
+            </div>
+
+            <!-- Random Note Modal -->
+            <div class="modal" id="random-note-modal">
+                <div class="modal__content" style="text-align: center;">
+                    <div class="modal__header" style="justify-content: flex-end;">
+                        <i class="fa-solid fa-times modal__close" id="close-random-modal"></i>
+                    </div>
+                    <div style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <p id="random-note-content" style="font-size: 1.25rem; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <!-- Content -->
+                    </p>
+                    <div id="random-note-meta" style="font-size: 0.9rem; color: var(--text-secondary);">
+                        <!-- Date & Category -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid fade-in-up delay-200">
+                <div class="stat-card">
+                    <h3 id="total-notes">0</h3>
+                    <p>Toplam Not</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="memories-count">0</h3>
+                    <p>Anı</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="achievements-count">0</h3>
+                    <p>Başarı</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="gratitude-count">0</h3>
+                    <p>Minnettarlık</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/modules/jar-goals.js"></script>
+</body>
+
+</html>

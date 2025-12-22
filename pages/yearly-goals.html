@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yıllık Hedefler - VisionFlow 2026</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+
+    <style>
+        /* Goals Specific Styles */
+        .goals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .progress-overview {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .progress-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--progress), var(--bg-tertiary) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .progress-circle::before {
+            content: '';
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            background: var(--bg-card);
+            border-radius: 50%;
+        }
+
+        .progress-text {
+            position: relative;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .goal-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .goal-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-md);
+        }
+
+        .goal-header {
+            padding: 1.5rem;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.05), transparent);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .goal-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .goal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .goal-deadline {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .goal-actions {
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+
+        .goal-card:hover .goal-actions {
+            opacity: 1;
+        }
+
+        .goal-body {
+            padding: 1.5rem;
+        }
+
+        .subgoals-list {
+            margin-bottom: 1.5rem;
+        }
+
+        .subgoal-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-light);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+
+        .subgoal-item.completed .checkbox {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .subgoal-item.completed .checkbox::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+            color: white;
+        }
+
+        .subgoal-text {
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .subgoal-item.completed .subgoal-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .goal-progress-bar {
+            height: 6px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .goal-progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Modal specific */
+        .subgoal-inputs {
+            margin-top: 1rem;
+        }
+
+        .subgoal-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container navbar__container">
+            <a href="../index.html" class="navbar__logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="text-gradient">VisionFlow</span>
+            </a>
+
+            <div class="navbar__menu" id="navbar-menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
+                    <li class="navbar__item"><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
+                    <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link">Yılbaşı Kavanozu</a></li>
+                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link active">Yıllık Hedefler</a>
+                    </li>
+                    <li class="navbar__item"><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
+                </ul>
+                <button class="navbar__close" id="navbar-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="navbar__actions">
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="user-avatar">
+                    <span class="user-name">Misafir</span>
+                </div>
+                <button class="navbar__toggle" id="navbar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
+        <div class="container">
+            <div class="goals-header">
+                <div>
+                    <h1 class="section__title">Yıllık <span class="text-gradient">Hedefler</span></h1>
+                    <p class="section__description">SMART hedeflerle başarıya adım adım ilerle.</p>
+                </div>
+                <button class="btn btn--primary" id="add-goal-btn">
+                    <i class="fa-solid fa-plus"></i> Yeni Hedef
+                </button>
+            </div>
+
+            <div class="progress-overview fade-in-up">
+                <div class="progress-circle" id="total-progress-circle" style="--progress: 0%">
+                    <span class="progress-text" id="total-progress-text">0%</span>
+                </div>
+                <div>
+                    <h3>Genel İlerleme</h3>
+                    <p style="color: var(--text-secondary);">Tüm hedeflerinin ortalama tamamlanma oranı.</p>
+                </div>
+            </div>
+
+            <div class="goals-grid fade-in-up delay-100" id="goals-container">
+                <!-- Goals will be added here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Goal Modal -->
+    <div class="modal" id="goal-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title">Yeni Hedef Ekle</h3>
+                <i class="fa-solid fa-times modal__close" id="close-goal-modal"></i>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Hedef Başlığı</label>
+                <input type="text" class="form-input" id="goal-title" placeholder="Örn: İngilizce B2 Seviyesine Gel">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kategori</label>
+                <select class="form-input" id="goal-category">
+                    <option value="Kariyer">Kariyer</option>
+                    <option value="Sağlık">Sağlık</option>
+                    <option value="Finans">Finans</option>
+                    <option value="Eğitim">Eğitim</option>
+                    <option value="Kişisel">Kişisel Gelişim</option>
+                    <option value="İlişkiler">İlişkiler</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Bitiş Tarihi</label>
+                <input type="date" class="form-input" id="goal-deadline">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Alt Hedefler (Adımlar)</label>
+                <div class="subgoal-inputs" id="subgoal-inputs">
+                    <div class="subgoal-input-group">
+                        <input type="text" class="form-input subgoal-input" placeholder="Adım 1">
+                    </div>
+                </div>
+                <button class="btn btn--outline btn--sm" id="add-subgoal-btn" style="margin-top: 0.5rem; width: 100%;">
+                    <i class="fa-solid fa-plus"></i> Adım Ekle
+                </button>
+            </div>
+
+            <button class="btn btn--primary" style="width: 100%;" id="confirm-add-goal">Hedefi Kaydet</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/modules/yearly-goals.js"></script>
+</body>
+
+</html>
