@@ -4,295 +4,647 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yılbaşı Kavanozu - VisionFlow 2026</title>
-
-    <!-- Fonts -->
+    <title>Yeni Yıl Dilek Kavanozu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Italianno&family=Montserrat:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
         rel="stylesheet">
-
-    <!-- Icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/animations.css">
-
     <style>
-        /* Jar Specific Styles */
-        .jar-container {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background-image: url('../assets/images/7.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 60vh;
             position: relative;
         }
 
+        /* Snowfall Canvas */
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            color: #f0e6d2;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 0, 0, 0.3);
+            border-color: rgba(212, 175, 55, 0.6);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+        }
+
+
+        /* JAR CONTAINER - BOYUNLU KURE ICIN */
+        .jar-container {
+            position: relative;
+            width: 260px;
+            height: 280px;
+            /* Boyun icin biraz yukseklik arttirildi */
+            z-index: 10;
+            animation: floatJar 6s ease-in-out infinite;
+            margin-top: 100px;
+            /* Daha da asagiya indirildi */
+        }
+
+        @keyframes floatJar {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* Premium Jar - OPAK KIRMIZI KURE (Seffaf Degil) */
         .jar {
-            width: 200px;
-            height: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px 20px 40px 40px;
-            position: relative;
-            backdrop-filter: blur(5px);
+            width: 100%;
+            height: 100%;
+            /* Opak zemin - derinlik icin koyu kirmizi/siyah */
+            background: radial-gradient(circle at 30% 30%, #5d0000 0%, #2b0000 100%);
+            /* Tam yuvarlak kure */
+            border-radius: 50%;
+            border: 4px solid #8b0000;
+            /* Kalin mat cerceve */
             box-shadow:
-                0 0 20px rgba(255, 255, 255, 0.1),
-                inset 0 0 20px rgba(255, 255, 255, 0.1);
-            margin-bottom: 2rem;
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                /* Golge */
+                inset 0 0 40px rgba(0, 0, 0, 0.3);
+            /* Ic golge (derinlik icin) */
+            position: relative;
             overflow: hidden;
-            transition: var(--transition-normal);
         }
 
+        /* Kavanoz Boynu - Kapagin altinda */
         .jar::before {
             content: '';
             position: absolute;
-            top: -15px;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 180px;
+            width: 120px;
             height: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
+            background: #8b0000;
+            /* Boyun da opak */
+            border: 2px solid #6b0000;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            z-index: 2;
         }
 
-        .jar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(var(--primary-hue), 100%, 65%, 0.3);
-        }
+        /* Glass Highlights - Gercekci Cam Yansimalari */
+        /* .jar::after pseudo elementini boyun icin kullandik, o yuzden bunu kaldirdik veya baska sekilde eklemeliyiz. Amac basitlik oldugu icin simdilik boyun ve kapak uyumuna odaklandik. */
 
-        .jar-note {
+        /* Premium Jar Lid - SADELESTIRILMIS */
+        .lid {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
+            top: -15px;
+            /* Boynun ustune */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 35px;
+            background: linear-gradient(135deg,
+                    #8b0000 0%,
+                    #a52a2a 25%,
+                    #8b0000 50%,
+                    #6b0000 75%,
+                    #8b0000 100%);
+            border-radius: 6px;
+            /* Daha kutu gibi kapak */
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, 0.4);
+            z-index: 20;
+            border: 2px solid #d4af37;
+        }
+
+        .lid::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 5px;
+            width: 126px;
+            /* Kapaktan biraz dar */
+            height: 8px;
+            background: linear-gradient(90deg, #6b0000, #8b0000, #6b0000);
+            border-radius: 4px 4px 0 0;
+            border: 2px solid #b8860b;
+            border-bottom: none;
+            box-shadow: inset 0 1px 2px rgba(212, 175, 55, 0.4);
+        }
+
+        .lid::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 35px;
+            height: 6px;
+            background: linear-gradient(90deg, #d4af37, #f8e8b0, #d4af37);
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Notes inside - TUM ALANA DAGILIM */
+        .notes-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            border-radius: 50%;
+            /* Kavanoz sekliyle uyumlu */
+            overflow: hidden;
+        }
+
+        .paper-note {
+            position: absolute;
+            /* Rulo sekli - silindir - KREM RENGI */
+            width: 8px;
+            height: 35px;
+            background: linear-gradient(90deg,
+                    #e0d5a0 0%,
+                    #fffff0 20%,
+                    #ffffff 50%,
+                    #fffff0 80%,
+                    #e0d5a0 100%);
             border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transform: rotate(var(--rotation));
-            bottom: var(--bottom);
-            left: var(--left);
-            opacity: 0.9;
-            transition: var(--transition-normal);
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.25),
+                inset 1px 0 2px rgba(180, 160, 100, 0.2),
+                inset -1px 0 2px rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s, opacity 0.3s;
         }
 
-        .jar-note:hover {
-            z-index: 10;
-            transform: scale(1.5) rotate(0deg);
-        }
-
-        .jar-controls {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .note-form {
-            background: var(--bg-card);
-            padding: 2rem;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            max-width: 500px;
+        /* Rulo uclari - krem */
+        .paper-note::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            margin: 0 auto;
+            height: 3px;
+            background: linear-gradient(90deg, #dcd0a0, #fffff0, #dcd0a0);
+            border-radius: 4px 4px 0 0;
         }
 
-        .category-select {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
+        .paper-note::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #dcd0a0, #fffff0, #dcd0a0);
+            border-radius: 0 0 4px 4px;
         }
 
-        .category-btn {
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-color);
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
+        /* BUTTON - KIRMIZI */
+        .draw-btn {
+            margin-top: 80px;
+            /* Buton daha asagiya indirildi */
+            z-index: 20;
+            padding: 18px 55px;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.8), rgba(178, 34, 34, 0.9));
+            border: 2px solid rgba(255, 100, 100, 0.6);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: var(--transition-fast);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow:
+                0 6px 25px rgba(220, 20, 60, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                0 0 30px rgba(220, 20, 60, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .category-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 3rem;
+        .draw-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            transition: 0.6s;
         }
 
-        .stat-card {
-            background: var(--bg-card);
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
+        .draw-btn:hover {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 1), rgba(178, 34, 34, 1));
+            border-color: rgba(255, 150, 150, 0.8);
+            transform: translateY(-3px);
+            box-shadow:
+                0 10px 35px rgba(220, 20, 60, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 0 40px rgba(220, 20, 60, 0.5);
+        }
+
+        .draw-btn:hover::before {
+            left: 100%;
+        }
+
+        .draw-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* WISH CARD OVERLAY - Daha Zarif */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #fffef9 0%, #ffffff 50%, #fffef9 100%);
+            color: #2d0b12;
+            width: 88%;
+            max-width: 450px;
+            padding: 50px 40px;
+            border-radius: 20px;
             text-align: center;
-            border: 1px solid var(--border-color);
+            box-shadow:
+                0 30px 90px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(212, 175, 55, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            transform: scale(0.85) translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
 
-        .stat-card h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+        .overlay.active .card {
+            transform: scale(1) translateY(0);
         }
 
-        .stat-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Dekoratif koseler */
+        .card::after {
+            content: '✦';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #d4af37;
+            opacity: 0.7;
+        }
+
+        .wish-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            line-height: 2;
+            margin: 0;
+            font-weight: 400;
+            color: #2d0b12;
+            position: relative;
+            z-index: 1;
+            padding: 20px 0;
+        }
+
+        /* Animation Keyframes */
+        @keyframes flyOut {
+            0% {
+                top: auto;
+                bottom: 50%;
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+
+            100% {
+                top: -100px;
+                bottom: auto;
+                opacity: 0;
+                transform: scale(2) rotate(180deg);
+            }
+        }
+
+        .flying-note {
+            z-index: 99;
+            animation: flyOut 1s ease-out forwards;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .jar-container {
+                width: 190px;
+                height: 260px;
+            }
+
+            .main-title {
+                font-size: 4rem;
+                top: 4%;
+            }
+
+            .draw-btn {
+                padding: 16px 45px;
+                font-size: 15px;
+                margin-top: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .jar-container {
+                width: 170px;
+                height: 240px;
+            }
+
+            .main-title {
+                font-size: 3.5rem;
+                top: 3%;
+            }
+
+            .draw-btn {
+                padding: 15px 40px;
+                font-size: 14px;
+                letter-spacing: 1.5px;
+            }
+
+            .card {
+                padding: 35px;
+                width: 90%;
+            }
+
+            .wish-text {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar glass">
-        <div class="container navbar__container">
-            <a href="../index.html" class="navbar__logo">
-                <i class="fa-solid fa-layer-group"></i>
-                <span class="text-gradient">VisionFlow</span>
-            </a>
+    <!-- Back Button -->
+    <a href="../index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Ana Sayfa
+    </a>
 
-            <div class="navbar__menu" id="navbar-menu">
-                <ul class="navbar__list">
-                    <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
-                    <li class="navbar__item"><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
-                    <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link active">Yılbaşı
-                            Kavanozu</a></li>
-                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
-                    <li class="navbar__item"><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
-                </ul>
-                <button class="navbar__close" id="navbar-close">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
 
-            <div class="navbar__actions">
-                <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="user-avatar">
-                    <span class="user-name">Misafir</span>
-                </div>
-                <button class="navbar__toggle" id="navbar-toggle">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
+
+    <!-- Canvas for Snow -->
+    <canvas id="snowCanvas"></canvas>
+
+    <!-- Jar -->
+    <div class="jar-container">
+        <div class="lid"></div>
+        <div class="jar">
+            <div class="notes-area" id="notesArea"></div>
         </div>
-    </nav>
+    </div>
 
-    <!-- Main Content -->
-    <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
-        <div class="container">
-            <div class="section__header">
-                <h1 class="section__title">Yılbaşı <span class="text-gradient">Kavanozu</span></h1>
-                <p class="section__description">Anılarını, başarılarını ve minnettarlıklarını burada biriktir.</p>
-            </div>
+    <button class="draw-btn" id="drawBtn">Kart Çek</button>
 
-            <div class="jar-container fade-in-up">
-                <div class="jar" id="memory-jar">
-                    <!-- Notes will be added here -->
-                </div>
-
-                <div class="jar-controls">
-                    <button class="btn btn--primary" id="add-note-btn">
-                        <i class="fa-solid fa-plus"></i> Not Ekle
-                    </button>
-                    <button class="btn btn--outline" id="shake-jar-btn">
-                        <i class="fa-solid fa-shuffle"></i> Karıştır & Rastgele Seç
-                    </button>
-                </div>
-            </div>
-
-            <!-- Add Note Modal/Form Area (Hidden by default, shown in modal) -->
-            <div class="modal" id="note-modal">
-                <div class="modal__content">
-                    <div class="modal__header">
-                        <h3 class="modal__title">Kavanoza Not At</h3>
-                        <i class="fa-solid fa-times modal__close" id="close-note-modal"></i>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Kategori</label>
-                        <div class="category-select" id="category-select">
-                            <button class="category-btn active" data-color="var(--accent-1)"
-                                data-cat="memory">Anı</button>
-                            <button class="category-btn" data-color="var(--accent-2)"
-                                data-cat="achievement">Başarı</button>
-                            <button class="category-btn" data-color="var(--accent-3)"
-                                data-cat="gratitude">Minnettarlık</button>
-                            <button class="category-btn" data-color="var(--accent-4)" data-cat="goal">Hedef</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Notun</label>
-                        <textarea class="form-input" id="note-text" rows="4"
-                            placeholder="Bugün harika bir şey oldu..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Tarih</label>
-                        <input type="date" class="form-input" id="note-date">
-                    </div>
-
-                    <button class="btn btn--primary" style="width: 100%;" id="confirm-add-note">Kavanoza At</button>
-                </div>
-            </div>
-
-            <!-- Random Note Modal -->
-            <div class="modal" id="random-note-modal">
-                <div class="modal__content" style="text-align: center;">
-                    <div class="modal__header" style="justify-content: flex-end;">
-                        <i class="fa-solid fa-times modal__close" id="close-random-modal"></i>
-                    </div>
-                    <div style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">
-                        <i class="fa-solid fa-quote-left"></i>
-                    </div>
-                    <p id="random-note-content" style="font-size: 1.25rem; margin-bottom: 1.5rem; line-height: 1.6;">
-                        <!-- Content -->
-                    </p>
-                    <div id="random-note-meta" style="font-size: 0.9rem; color: var(--text-secondary);">
-                        <!-- Date & Category -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-grid fade-in-up delay-200">
-                <div class="stat-card">
-                    <h3 id="total-notes">0</h3>
-                    <p>Toplam Not</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="memories-count">0</h3>
-                    <p>Anı</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="achievements-count">0</h3>
-                    <p>Başarı</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="gratitude-count">0</h3>
-                    <p>Minnettarlık</p>
-                </div>
-            </div>
+    <!-- Overlay -->
+    <div class="overlay" id="overlay">
+        <div class="card" id="card">
+            <p class="wish-text" id="wishText">...</p>
         </div>
-    </main>
+    </div>
 
-    <!-- Scripts -->
-    <script src="../js/utils/storage.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="../js/modules/jar-goals.js"></script>
+    <script>
+        // Snowfall Logic
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        const snowflakes = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Snowflake {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * -height;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 1.2 + 0.4;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.opacity = Math.random() * 0.6 + 0.4;
+                this.wobble = Math.random() * 0.4;
+                this.wobbleOffset = Math.random() * Math.PI * 2;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(Date.now() * 0.001 * this.wobble + this.wobbleOffset) * 0.4;
+                if (this.y > height) {
+                    this.y = -10;
+                    this.x = Math.random() * width;
+                }
+                if (this.x > width) this.x = 0;
+                if (this.x < 0) this.x = width;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Subtle glow
+                ctx.shadowColor = `rgba(255, 255, 255, ${this.opacity * 0.4})`;
+                ctx.shadowBlur = 3;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function initSnow() {
+            for (let i = 0; i < 120; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
+        function animateSnow() {
+            ctx.clearRect(0, 0, width, height);
+            snowflakes.forEach(f => {
+                f.update();
+                f.draw();
+            });
+            requestAnimationFrame(animateSnow);
+        }
+        initSnow();
+        animateSnow();
+
+        // Jar Notes Logic
+        const notesArea = document.getElementById('notesArea');
+        const noteCount = 300; // Dengeli sayi, esit dagilim
+
+        function fillJar() {
+            notesArea.innerHTML = '';
+            for (let i = 0; i < noteCount; i++) {
+                const note = document.createElement('div');
+                note.classList.add('paper-note');
+
+                // Tam dagilim icin rastgele pozisyonlar
+                // Kenarlardan biraz bosluk birakarak (daha dogal gorunum)
+                const left = 5 + Math.random() * 90;
+                const top = 10 + Math.random() * 85;
+
+                const rotate = Math.random() * 360;
+
+                note.style.left = left + '%';
+                note.style.top = top + '%';
+                note.style.transform = `rotate(${rotate}deg)`;
+                notesArea.appendChild(note);
+            }
+        }
+        fillJar();
+
+        // Wishes
+        const wishes = [
+            "Yeni yılın sevdiklerinle hep birlikte olasın",
+            "Tüm hayallerin gerçek olsun",
+            "Sağlık dolu bir yıl geçiresin",
+            "Mutluluk kapını hep çalsın",
+            "Gülümseyen yüzler seni hep kucaklasın",
+            "Bereketin hiç eksilmesin",
+            "Sevgi dolu bir yıl olsun",
+            "Huzur her anında olsun",
+            "Yeni yılda yeni başlangıçlar olsun",
+            "Kalbindeki tüm dilekler kabul olsun",
+            "Başarılarını arttıralım",
+            "Ailenle güzel anılar biriktiresin",
+            "Her gün bir mucize yaşasın",
+            "Yolun hep açık olsun",
+            "Neşen hiç eksilmesin",
+            "Umutların hep yeşersin",
+            "Sevdiklerinle gülmeye devam et",
+            "Her sabah mutlu uyanasın",
+            "Şans hep yanında olsun",
+            "Kalbindeki ışık hiç sönmesin",
+            "Yeni yılda sürprizler seni bekliyor olsun",
+            "Her şey gönlünce olsun",
+            "Güzel günler seninle olsun",
+            "Hayatın rengarenk olsun",
+            "Sevgi ve barış içinde yaşasın",
+            "Yeni yılın tüm kapıları sana açılsın",
+            "Hep iyilerle karşılaşasın",
+            "Yüreğin hep sıcak kalsın",
+            "Bolluk ve bereketin eksilmesin",
+            "Mutluluğun hiç bitmesin"
+        ];
+
+        // Drawing Logic
+        const drawBtn = document.getElementById('drawBtn');
+        const overlay = document.getElementById('overlay');
+        const card = document.getElementById('card');
+        const wishText = document.getElementById('wishText');
+
+        drawBtn.addEventListener('click', () => {
+            const notes = document.querySelectorAll('.paper-note');
+            const randomNote = notes[Math.floor(Math.random() * notes.length)];
+
+            const flying = randomNote.cloneNode(true);
+            flying.classList.add('flying-note');
+            notesArea.appendChild(flying);
+
+            randomNote.style.opacity = '0';
+
+            setTimeout(() => {
+                const wish = wishes[Math.floor(Math.random() * wishes.length)];
+                wishText.textContent = wish;
+                overlay.classList.add('active');
+
+                setTimeout(() => {
+                    flying.remove();
+                    randomNote.style.opacity = '1';
+                }, 500);
+            }, 800);
+        });
+
+        // Close Card
+        card.addEventListener('click', () => {
+            overlay.classList.remove('active');
+        });
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 
 </html>
