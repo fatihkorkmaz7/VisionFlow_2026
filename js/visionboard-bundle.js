@@ -1,5 +1,106 @@
-import { DragDropManager } from './drag-drop.js';
+// Vision Board JavaScript - Non-module version
+console.log('VisionBoard bundle loaded!');
 
+// Drag Drop Manager
+class DragDropManager {
+    constructor(boardId) {
+        console.log('DragDropManager initialized with boardId:', boardId);
+        this.board = document.getElementById(boardId);
+        this.placeholder = document.getElementById('board-placeholder');
+        this.init();
+    }
+
+    init() {
+        if (!this.board) return;
+
+        // Board events
+        this.board.addEventListener('dragover', (e) => this.handleDragOver(e));
+        this.board.addEventListener('dragleave', (e) => this.handleDragLeave(e));
+        this.board.addEventListener('drop', (e) => this.handleDrop(e));
+    }
+
+    handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+        this.board.classList.add('drag-over');
+    }
+
+    handleDragLeave(e) {
+        this.board.classList.remove('drag-over');
+    }
+
+    handleDrop(e) {
+        e.preventDefault();
+        this.board.classList.remove('drag-over');
+
+        // Hide placeholder
+        if (this.placeholder) {
+            this.placeholder.style.display = 'none';
+        }
+
+        // Handle text/uri-list (Image URL from sidebar)
+        const imageUrl = e.dataTransfer.getData('text/plain');
+        if (imageUrl) {
+            this.addImageToBoard(imageUrl);
+            return;
+        }
+
+        // Handle Files (Upload from desktop)
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
+            this.handleFiles(files);
+        }
+    }
+
+    handleFiles(files) {
+        Array.from(files).forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.addImageToBoard(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    addImageToBoard(src) {
+        const item = document.createElement('div');
+        item.className = 'board-item';
+        item.draggable = true;
+
+        // Random rotation for natural feel
+        const rotation = Math.random() * 6 - 3; // -3 to 3 degrees
+        item.style.transform = `rotate(${rotation}deg)`;
+
+        item.innerHTML = `
+            <img src="${src}" alt="Vision Item">
+            <div class="board-item__delete"><i class="fa-solid fa-times"></i></div>
+        `;
+
+        // Add delete functionality
+        item.querySelector('.board-item__delete').addEventListener('click', () => {
+            item.remove();
+            this.checkEmptyState();
+        });
+
+        // Add drag functionality for reordering
+        item.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', src);
+            item.classList.add('dragging');
+        });
+
+        this.board.appendChild(item);
+    }
+
+    checkEmptyState() {
+        if (this.board.querySelectorAll('.board-item').length === 0) {
+            if (this.placeholder) this.placeholder.style.display = 'block';
+        }
+    }
+}
+
+// Vision Board Main Class
 class VisionBoard {
     constructor() {
         this.boardId = 'vision-board';
@@ -7,7 +108,7 @@ class VisionBoard {
         this.categoryBtns = document.querySelectorAll('.vb-cat-btn');
         this.dragDropManager = new DragDropManager(this.boardId);
 
-        // Local Assets Data
+        // Local Assets Data - mapped from assets folder
         this.assets = {
             health: [
                 '../assets/Saglik/b530c903911965dd00891c30653c8939.jpg',
@@ -58,7 +159,9 @@ class VisionBoard {
 
         // Load initial category
         this.loadAssets('health');
-        this.categoryBtns[0].classList.add('active');
+        if (this.categoryBtns.length > 0) {
+            this.categoryBtns[0].classList.add('active');
+        }
     }
 
     initCategorySelection() {
@@ -76,8 +179,15 @@ class VisionBoard {
     }
 
     loadAssets(category) {
+        if (!this.assetsGrid) return;
+
         this.assetsGrid.innerHTML = '';
         const images = this.assets[category] || [];
+
+        if (images.length === 0) {
+            this.assetsGrid.innerHTML = '<p class="text-muted text-sm">Bu kategoride görsel bulunamadı.</p>';
+            return;
+        }
 
         images.forEach(src => {
             const item = document.createElement('div');
@@ -85,8 +195,14 @@ class VisionBoard {
             item.draggable = true;
             item.innerHTML = `<img src="${src}" alt="${category}">`;
 
+            // Drag start - for dragging to board
             item.addEventListener('dragstart', (e) => {
                 e.dataTransfer.setData('text/plain', src);
+            });
+
+            // Click to add to board
+            item.addEventListener('click', () => {
+                this.dragDropManager.addImageToBoard(src);
             });
 
             this.assetsGrid.appendChild(item);
