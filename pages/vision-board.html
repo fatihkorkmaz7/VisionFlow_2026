@@ -267,28 +267,45 @@
 
                 <div class="vb-categories-grid">
                     <button class="vb-cat-btn" data-category="health">
-                        <i class="fa-solid fa-heart-pulse" style="color: #ff6b6b;"></i>
+                        <img src="../assets/icons/icon_health_1766696420365.png" alt="Sağlık" class="cat-icon">
                         <span>Sağlık</span>
                     </button>
                     <button class="vb-cat-btn" data-category="love">
-                        <i class="fa-solid fa-heart" style="color: #ff4757;"></i>
+                        <img src="../assets/icons/icon_love_1766696433293.png" alt="Aşk" class="cat-icon">
                         <span>Aşk</span>
                     </button>
                     <button class="vb-cat-btn" data-category="career">
-                        <i class="fa-solid fa-briefcase" style="color: #5352ed;"></i>
+                        <img src="../assets/icons/icon_career_1766696447448.png" alt="Kariyer" class="cat-icon">
                         <span>Kariyer</span>
                     </button>
                     <button class="vb-cat-btn" data-category="finance">
-                        <i class="fa-solid fa-sack-dollar" style="color: #ffa502;"></i>
+                        <img src="../assets/icons/icon_finance_1766696462547.png" alt="Finans" class="cat-icon">
                         <span>Finans</span>
                     </button>
                     <button class="vb-cat-btn" data-category="travel">
-                        <i class="fa-solid fa-plane" style="color: #00cec9;"></i>
+                        <img src="../assets/icons/icon_travel_1766696477342.png" alt="Seyahat" class="cat-icon">
                         <span>Seyahat</span>
                     </button>
                     <button class="vb-cat-btn" data-category="family">
-                        <i class="fa-solid fa-user-group" style="color: #74b9ff;"></i>
+                        <img src="../assets/icons/icon_family_1766696506653.png" alt="Aile" class="cat-icon">
                         <span>Aile</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="hobbies">
+                        <img src="../assets/icons/icon_hobbies_1766696520963.png" alt="Hobiler" class="cat-icon">
+                        <span>Hobiler</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="quotes">
+                        <img src="../assets/icons/icon_quotes_1766696534784.png" alt="İlham Veren Sözler"
+                            class="cat-icon">
+                        <span>İlham Veren Sözler</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="education">
+                        <img src="../assets/icons/icon_education_1766696549213.png" alt="Eğitim" class="cat-icon">
+                        <span>Eğitim</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="social">
+                        <img src="../assets/icons/icon_social_1766696561556.png" alt="Sosyal Hayat" class="cat-icon">
+                        <span>Sosyal Hayat</span>
                     </button>
                 </div>
 
@@ -331,13 +348,58 @@
                         <h1 class="vb-title">Vision Board <span class="text-gradient">2026</span></h1>
                         <p class="vb-subtitle">Hayallerini buraya sürükle ve tasarla.</p>
                     </div>
-                    <div class="vb-actions">
-                        <button class="btn btn--outline btn--icon" id="clear-board-btn" title="Temizle">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                        <button class="btn btn--primary btn--icon" id="save-board-btn" title="Kaydet">
-                            <i class="fa-solid fa-save"></i>
-                        </button>
+                    <div class="vb-header-controls">
+                        <!-- Template Selector -->
+                        <div class="template-selector">
+                            <button class="template-btn" id="template-toggle" title="Şablon Seç">
+                                <i class="fa-solid fa-table-cells-large"></i>
+                                <span>Şablon</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                            <div class="template-dropdown" id="template-dropdown">
+                                <div class="template-option active" data-template="grid">
+                                    <div class="template-preview template-preview--grid">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <span>Klasik Grid</span>
+                                </div>
+                                <div class="template-option" data-template="polaroid">
+                                    <div class="template-preview template-preview--polaroid">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <span>Polaroid</span>
+                                </div>
+                                <div class="template-option" data-template="freeform">
+                                    <div class="template-preview template-preview--freeform">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <span>Serbest</span>
+                                </div>
+                                <div class="template-option" data-template="masonry">
+                                    <div class="template-preview template-preview--masonry">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <span>Masonry</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vb-actions">
+                            <button class="btn btn--outline btn--icon" id="clear-board-btn" title="Temizle">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="btn btn--primary btn--icon" id="save-board-btn" title="Kaydet">
+                                <i class="fa-solid fa-save"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -535,6 +597,18 @@
                         '../assets/Aile/03325a1ef921ea5e550d2e76ab25bd2c.jpg',
                         '../assets/Aile/b2f52e1e7c3235d7bae42554c3f1819d.jpg',
                         '../assets/Aile/f348a134a38599eccc17d9a1828d103d.jpg'
+                    ],
+                    hobbies: [
+                        '../assets/Hobiler/ae3476b91deb90530deb9d57ff044c24.jpg'
+                    ],
+                    quotes: [
+                        '../assets/ Ilham Veren Sozler/cc1ed182d86ca77f06c050cfa7fa5f40.jpg'
+                    ],
+                    education: [
+                        '../assets/Egitim/98220edce909476f12ac055691c84b93.jpg'
+                    ],
+                    social: [
+                        '../assets/Sosyal Hayat/8526d98b816a2c695cad21a443362887.jpg'
                     ]
                 };
                 this.init();
@@ -626,6 +700,83 @@
                 }
                 const saveBtn = document.getElementById('save-board-btn');
                 if (saveBtn) saveBtn.addEventListener('click', () => alert('Vision Board kaydedildi! (Demo)'));
+
+                // Initialize template system
+                this.initTemplateSelector();
+            }
+
+            initTemplateSelector() {
+                const templateToggle = document.getElementById('template-toggle');
+                const templateDropdown = document.getElementById('template-dropdown');
+                const templateOptions = document.querySelectorAll('.template-option');
+                const board = document.getElementById(this.boardId);
+
+                // Set default template
+                board.classList.add('template-grid');
+
+                // Toggle dropdown
+                if (templateToggle) {
+                    templateToggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        templateDropdown.classList.toggle('show');
+                    });
+                }
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', () => {
+                    templateDropdown.classList.remove('show');
+                });
+
+                // Template selection
+                templateOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const template = option.dataset.template;
+                        this.changeTemplate(template);
+
+                        // Update active state
+                        templateOptions.forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+
+                        // Close dropdown
+                        templateDropdown.classList.remove('show');
+                    });
+                });
+            }
+
+            changeTemplate(template) {
+                const board = document.getElementById(this.boardId);
+
+                // Remove all template classes
+                board.classList.remove('template-grid', 'template-polaroid', 'template-freeform', 'template-masonry');
+
+                // Add new template class
+                board.classList.add(`template-${template}`);
+
+                // Reset item positions for freeform
+                if (template === 'freeform') {
+                    const items = board.querySelectorAll('.board-item');
+                    items.forEach((item, index) => {
+                        // Random positioning for freeform
+                        const maxX = board.offsetWidth - 220;
+                        const maxY = board.offsetHeight - 170;
+                        const x = Math.random() * maxX;
+                        const y = Math.random() * maxY;
+                        const rotation = Math.random() * 10 - 5;
+                        item.style.left = `${x}px`;
+                        item.style.top = `${y}px`;
+                        item.style.transform = `rotate(${rotation}deg)`;
+                    });
+                } else {
+                    // Clear inline styles for other templates
+                    const items = board.querySelectorAll('.board-item');
+                    items.forEach(item => {
+                        item.style.left = '';
+                        item.style.top = '';
+                        item.style.transform = '';
+                    });
+                }
+
+                console.log('Template changed to:', template);
             }
         }
 

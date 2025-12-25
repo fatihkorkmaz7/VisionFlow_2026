@@ -1,70 +1,76 @@
-/* ===== CSS VARIABLES ===== */
+/* ===== CSS VARIABLES - Soft & Dreamy Theme ===== */
 :root {
-    /* Primary Colors */
-    --primary-hue: 250;
-    --primary: hsl(var(--primary-hue), 100%, 65%);
-    --primary-light: hsl(var(--primary-hue), 100%, 75%);
-    --primary-dark: hsl(var(--primary-hue), 100%, 45%);
-    --primary-bg: hsl(var(--primary-hue), 100%, 97%);
+    /* Primary Colors - Soft lavender/purple */
+    --primary-hue: 260;
+    --primary: hsl(260, 60%, 65%);
+    --primary-light: hsl(260, 70%, 80%);
+    --primary-dark: hsl(260, 50%, 50%);
+    --primary-bg: hsl(260, 30%, 97%);
 
-    /* Accent Colors */
-    --accent-1: hsl(340, 100%, 65%);
-    --accent-2: hsl(170, 100%, 45%);
-    --accent-3: hsl(45, 100%, 55%);
-    --accent-4: hsl(200, 100%, 55%);
+    /* Accent Colors - Soft pastels */
+    --accent-1: hsl(340, 60%, 75%);
+    /* Soft pink */
+    --accent-2: hsl(170, 50%, 70%);
+    /* Soft mint */
+    --accent-3: hsl(40, 80%, 75%);
+    /* Soft gold */
+    --accent-4: hsl(200, 60%, 75%);
+    /* Soft sky */
 
-    /* Category Colors */
-    --cat-health: hsl(140, 70%, 45%);
-    --cat-career: hsl(220, 70%, 55%);
-    --cat-finance: hsl(45, 85%, 50%);
-    --cat-education: hsl(280, 70%, 55%);
-    --cat-relationships: hsl(340, 70%, 55%);
-    --cat-personal: hsl(170, 70%, 45%);
+    /* Category Colors - Muted & gentle */
+    --cat-health: hsl(340, 50%, 70%);
+    --cat-career: hsl(220, 50%, 70%);
+    --cat-finance: hsl(45, 60%, 70%);
+    --cat-education: hsl(280, 45%, 70%);
+    --cat-relationships: hsl(0, 50%, 75%);
+    --cat-personal: hsl(170, 45%, 65%);
 
-    /* Neutral Colors */
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #12121a;
-    --bg-tertiary: #1a1a25;
-    --bg-card: rgba(255, 255, 255, 0.03);
-    --bg-card-hover: rgba(255, 255, 255, 0.06);
+    /* Neutral Colors - Warm whites & soft grays */
+    --bg-primary: #fdfbf9;
+    --bg-secondary: #f8f6f4;
+    --bg-tertiary: #f0eeec;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-card-hover: rgba(255, 255, 255, 0.95);
 
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.4);
+    --text-primary: #3d3d3d;
+    --text-secondary: rgba(60, 60, 60, 0.75);
+    --text-muted: rgba(60, 60, 60, 0.5);
 
-    --border-color: rgba(255, 255, 255, 0.08);
-    --border-light: rgba(255, 255, 255, 0.12);
+    --border-color: rgba(0, 0, 0, 0.06);
+    --border-light: rgba(0, 0, 0, 0.08);
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, var(--primary), var(--accent-1));
-    --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
-    --gradient-glow: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    /* Gradients - Dreamy & ethereal */
+    --gradient-primary: linear-gradient(135deg, hsl(260, 60%, 75%), hsl(340, 60%, 80%));
+    --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+    --gradient-glow: radial-gradient(circle, hsl(260, 60%, 90%) 0%, transparent 70%);
+    --gradient-bg: linear-gradient(180deg, #fdfbf9 0%, #f5f0eb 100%);
 
-    /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 30px rgba(var(--primary-hue), 100%, 65%, 0.3);
+    /* Shadows - Soft & diffused */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.08);
+    --shadow-soft: 0 10px 40px rgba(180, 160, 200, 0.15);
+    --shadow-glow: 0 0 30px rgba(180, 160, 220, 0.2);
 
     /* Typography */
     --font-primary: 'Outfit', sans-serif;
     --font-secondary: 'Inter', sans-serif;
 
-    /* Spacing */
+    /* Spacing - More breathing room */
     --container-width: 1200px;
-    --section-padding: 6rem;
+    --section-padding: 5rem;
     --header-height: 70px;
 
-    /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.5s ease;
+    /* Transitions - Gentle & smooth */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Border Radius */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-xl: 30px;
+    /* Border Radius - Soft & rounded */
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
     --radius-full: 9999px;
 }
 
@@ -203,35 +209,44 @@ select {
 
 /* ===== SELECTION ===== */
 
-/* ===== VISION BOARD PAGE STYLES ===== */
+/* ===== VISION BOARD PAGE STYLES - Soft & Dreamy ===== */
 .vb-section {
-    background-image: radial-gradient(circle at 10% 20%, rgba(var(--primary-hue), 100%, 65%, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(34, 193, 195, 0.1) 0%, transparent 20%);
+    background: var(--gradient-bg);
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(200, 180, 220, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(220, 180, 200, 0.12) 0%, transparent 25%),
+        radial-gradient(circle at 50% 50%, rgba(180, 200, 220, 0.08) 0%, transparent 40%);
 }
 
 .vb-container {
     display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 2rem;
+    grid-template-columns: 340px 1fr;
+    gap: 2.5rem;
     height: calc(100vh - var(--header-height) - 4rem);
 }
 
-/* Sidebar Styles */
+/* Sidebar Styles - Glassmorphism light */
 .vb-sidebar {
-    padding: 1.5rem;
-    border-radius: var(--radius-lg);
+    padding: 2rem;
+    border-radius: var(--radius-xl);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
     height: 100%;
     overflow-y: auto;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: var(--shadow-soft);
 }
 
 .vb-sidebar__header h3 {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--text-secondary);
-    letter-spacing: 0.5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -240,7 +255,7 @@ select {
 .vb-categories-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .vb-cat-btn {
@@ -248,30 +263,52 @@ select {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    transition: var(--transition-fast);
+    gap: 0.6rem;
+    padding: 1.25rem 1rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: var(--radius-lg);
+    transition: var(--transition-normal);
     cursor: pointer;
+    color: var(--text-secondary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.vb-cat-btn:hover,
+.cat-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+}
+
+.vb-cat-btn:hover .cat-icon {
+    transform: scale(1.1);
+}
+
+.vb-cat-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(180, 160, 200, 0.2);
+}
+
 .vb-cat-btn.active {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--primary);
+    background: white;
+    border-color: var(--primary-light);
+    box-shadow: 0 8px 30px rgba(180, 160, 200, 0.25);
     transform: translateY(-2px);
 }
 
 .vb-cat-btn span {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
+    color: var(--text-secondary);
 }
 
 .vb-divider {
     height: 1px;
-    background: var(--border-color);
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    margin: 0.5rem 0;
     width: 100%;
 }
 
@@ -315,23 +352,25 @@ select {
 .assets-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 1rem;
     margin-top: 1rem;
 }
 
 .asset-item {
     position: relative;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     overflow: hidden;
     aspect-ratio: 1;
     cursor: grab;
-    border: 1px solid transparent;
-    transition: var(--transition-fast);
+    border: 2px solid transparent;
+    transition: var(--transition-normal);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .asset-item:hover {
-    border-color: var(--primary);
-    transform: scale(1.05);
+    border-color: var(--primary-light);
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(180, 160, 200, 0.2);
     z-index: 10;
 }
 
@@ -340,7 +379,7 @@ select {
     height: 100%;
     object-fit: cover;
     pointer-events: none;
-    /* Prevent browser default drag */
+    border-radius: var(--radius-sm);
 }
 
 /* Board Area */
@@ -384,23 +423,20 @@ select {
     border-radius: var(--radius-md);
 }
 
-/* Board Container Updates */
+/* Board Container Updates - Soft & Inviting */
 .board-container {
     flex: 1;
-    background-color: var(--bg-secondary);
-    border: 2px dashed var(--border-color);
-    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px dashed rgba(180, 160, 200, 0.3);
+    border-radius: var(--radius-xl);
     position: relative;
     overflow: hidden;
-    /* Remove grid to allow free placement or use absolute positioning for strict drag drop if needed. 
-       For now, let's keep grid but make it more flexible or just relative container for absolute items.
-       Let's stick to the previous grid logic or update to absolute if requested. 
-       The user asked for drag and drop. Grid is easier for auto-placement. 
-       Let's refactor to support better drag and drop. */
     display: block;
-    /* Changed from grid to block for free canvas feel or masonry later */
     overflow-y: auto;
     padding: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 60px rgba(200, 180, 220, 0.05);
 }
 
 /* If we want a grid layout inside the board but draggable */
@@ -408,7 +444,7 @@ select {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-auto-rows: 200px;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .board-placeholder {
@@ -417,23 +453,27 @@ select {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: var(--border-light);
+    color: rgba(180, 160, 200, 0.4);
     pointer-events: none;
 }
 
 .board-placeholder i {
     font-size: 4rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
 }
 
 .board-placeholder p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 /* Active Drag State */
 .board-container.drag-over {
-    border-color: var(--primary);
-    background-color: rgba(var(--primary-hue), 100%, 65%, 0.05);
+    border-color: var(--primary-light);
+    background: rgba(230, 220, 240, 0.3);
+    box-shadow: inset 0 0 80px rgba(180, 160, 220, 0.1);
 }
 
 /* Responsive */
