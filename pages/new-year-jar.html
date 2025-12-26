@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeni Yıl Dilek Kavanozu</title>
+    <title>Yeni Yıl Dilek Kavanozu 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Italianno&family=Montserrat:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Italianno&family=Montserrat:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
         rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,7 +23,7 @@
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
             height: 100vh;
-            background-image: url('../assets/images/7.jpg');
+            background-image: url('../assets/images/4.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -74,17 +74,89 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
         }
 
+        /* SCENE WRAPPER - Yazilar ve Kavanoz icin kapsayici */
+        .scene-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            /* Yazilarla kavanoz arasi bosluk */
+            margin-top: 50px;
+            z-index: 10;
+        }
 
-        /* JAR CONTAINER - BOYUNLU KURE ICIN */
+        /* Year Text Styles - Kavanozdan BAGIMSIZ */
+        .year-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 11rem;
+            /* Daha buyuk ve gosterisli */
+            font-weight: 700;
+            line-height: 1;
+
+            /* Altın Yaldız Gradient (Metalik Doku) */
+            background: linear-gradient(to bottom, #e0b62c 0%, #f9f1cc 30%, #e2aa1b 60%, #d4af37 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Yaldız Parlaması (Neon sarı yerine altın glow) */
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+
+            animation: textGlow 3s ease-in-out infinite alternate;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        @keyframes textGlow {
+            0% {
+                filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.4));
+                transform: scale(1);
+            }
+
+            100% {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+                transform: scale(1.02);
+            }
+        }
+
+        /* JAR CONTAINER */
         .jar-container {
             position: relative;
             width: 260px;
             height: 280px;
-            /* Boyun icin biraz yukseklik arttirildi */
-            z-index: 10;
+            /* Floating effect */
             animation: floatJar 6s ease-in-out infinite;
-            margin-top: 100px;
-            /* Daha da asagiya indirildi */
+        }
+
+        /* Shake Animation Override */
+        .jar-container.shaking {
+            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translate3d(-1px, 0, 0) rotate(-1deg);
+            }
+
+            20%,
+            80% {
+                transform: translate3d(2px, 0, 0) rotate(2deg);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-4px, 0, 0) rotate(-2deg);
+            }
+
+            40%,
+            60% {
+                transform: translate3d(4px, 0, 0) rotate(2deg);
+            }
         }
 
         @keyframes floatJar {
@@ -99,26 +171,22 @@
             }
         }
 
-        /* Premium Jar - OPAK KIRMIZI KURE (Seffaf Degil) */
+        /* Premium Jar */
         .jar {
             width: 100%;
             height: 100%;
-            /* Opak zemin - derinlik icin koyu kirmizi/siyah */
             background: radial-gradient(circle at 30% 30%, #5d0000 0%, #2b0000 100%);
-            /* Tam yuvarlak kure */
             border-radius: 50%;
             border: 4px solid #8b0000;
-            /* Kalin mat cerceve */
             box-shadow:
                 0 25px 50px rgba(0, 0, 0, 0.5),
-                /* Golge */
                 inset 0 0 40px rgba(0, 0, 0, 0.3);
-            /* Ic golge (derinlik icin) */
             position: relative;
             overflow: hidden;
+            z-index: 10;
         }
 
-        /* Kavanoz Boynu - Kapagin altinda */
+        /* Kavanoz Boynu */
         .jar::before {
             content: '';
             position: absolute;
@@ -128,21 +196,16 @@
             width: 120px;
             height: 20px;
             background: #8b0000;
-            /* Boyun da opak */
             border: 2px solid #6b0000;
             border-bottom: none;
             border-radius: 10px 10px 0 0;
-            z-index: 2;
+            z-index: 11;
         }
 
-        /* Glass Highlights - Gercekci Cam Yansimalari */
-        /* .jar::after pseudo elementini boyun icin kullandik, o yuzden bunu kaldirdik veya baska sekilde eklemeliyiz. Amac basitlik oldugu icin simdilik boyun ve kapak uyumuna odaklandik. */
-
-        /* Premium Jar Lid - SADELESTIRILMIS */
+        /* Premium Jar Lid */
         .lid {
             position: absolute;
             top: -15px;
-            /* Boynun ustune */
             left: 50%;
             transform: translateX(-50%);
             width: 140px;
@@ -154,11 +217,16 @@
                     #6b0000 75%,
                     #8b0000 100%);
             border-radius: 6px;
-            /* Daha kutu gibi kapak */
-            box-shadow:
-                0 4px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             z-index: 20;
             border: 2px solid #d4af37;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: left bottom;
+        }
+
+        /* Lid Open State */
+        .jar-container.open .lid {
+            transform: translateX(-50%) translateY(-30px) rotate(-25deg);
         }
 
         .lid::before {
@@ -167,7 +235,6 @@
             top: -6px;
             left: 5px;
             width: 126px;
-            /* Kapaktan biraz dar */
             height: 8px;
             background: linear-gradient(90deg, #6b0000, #8b0000, #6b0000);
             border-radius: 4px 4px 0 0;
@@ -189,7 +256,7 @@
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
         }
 
-        /* Notes inside - TUM ALANA DAGILIM */
+        /* Notes inside */
         .notes-area {
             position: absolute;
             top: 0;
@@ -198,13 +265,11 @@
             height: 100%;
             z-index: 1;
             border-radius: 50%;
-            /* Kavanoz sekliyle uyumlu */
             overflow: hidden;
         }
 
         .paper-note {
             position: absolute;
-            /* Rulo sekli - silindir - KREM RENGI */
             width: 8px;
             height: 35px;
             background: linear-gradient(90deg,
@@ -221,33 +286,66 @@
             transition: transform 0.3s, opacity 0.3s;
         }
 
-        /* Rulo uclari - krem */
-        .paper-note::before {
+        /* Rising Note Animation Element */
+        .rising-note {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            /* Initial state: behind the jar neck */
+            transform: translate(-50%, 20px) scale(0.2) rotate(10deg);
+            opacity: 0;
+            z-index: 15;
+            /* Front of Jar body (10), Behind Lid (20) */
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rising-note::after {
+            /* Fold effect */
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #dcd0a0, #fffff0, #dcd0a0);
-            border-radius: 4px 4px 0 0;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 40%, rgba(0, 0, 0, 0.05) 50%, transparent 60%);
         }
 
-        .paper-note::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #dcd0a0, #fffff0, #dcd0a0);
-            border-radius: 0 0 4px 4px;
+        .rising-note.animate {
+            animation: riseUp 1.2s forwards ease-in-out;
         }
 
-        /* BUTTON - KIRMIZI */
+        @keyframes riseUp {
+            0% {
+                transform: translate(-50%, 20px) scale(0.2) rotate(10deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            60% {
+                transform: translate(-50%, -100px) scale(0.6) rotate(-5deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -150px) scale(1) rotate(0deg);
+                opacity: 0;
+                /* Fade out as overlay takes over */
+            }
+        }
+
+        /* BUTTON */
         .draw-btn {
             margin-top: 80px;
-            /* Buton daha asagiya indirildi */
             z-index: 20;
             padding: 18px 55px;
             background: linear-gradient(135deg, rgba(220, 20, 60, 0.8), rgba(178, 34, 34, 0.9));
@@ -302,7 +400,7 @@
             transform: translateY(-1px);
         }
 
-        /* WISH CARD OVERLAY - Daha Zarif */
+        /* WISH CARD OVERLAY */
         .overlay {
             position: fixed;
             top: 0;
@@ -317,7 +415,7 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.8s ease;
         }
 
         .overlay.active {
@@ -337,13 +435,15 @@
                 0 30px 90px rgba(0, 0, 0, 0.7),
                 0 0 0 1px rgba(212, 175, 55, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 1);
-            transform: scale(0.85) translateY(30px);
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.6) translateY(50px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
         }
 
         .overlay.active .card {
             transform: scale(1) translateY(0);
+            opacity: 1;
         }
 
         .card::before {
@@ -359,7 +459,6 @@
             opacity: 0.6;
         }
 
-        /* Dekoratif koseler */
         .card::after {
             content: '✦';
             position: absolute;
@@ -383,38 +482,21 @@
             padding: 20px 0;
         }
 
-        /* Animation Keyframes */
-        @keyframes flyOut {
-            0% {
-                top: auto;
-                bottom: 50%;
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
-
-            100% {
-                top: -100px;
-                bottom: auto;
-                opacity: 0;
-                transform: scale(2) rotate(180deg);
-            }
-        }
-
-        .flying-note {
-            z-index: 99;
-            animation: flyOut 1s ease-out forwards;
-        }
-
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .scene-wrapper {
+                gap: 15px;
+                /* Mobilde daha sikisik */
+            }
+
             .jar-container {
                 width: 190px;
                 height: 260px;
             }
 
-            .main-title {
-                font-size: 4rem;
-                top: 4%;
+            .year-text {
+                font-size: 6rem;
+                /* Mobilde kucult */
             }
 
             .draw-btn {
@@ -425,14 +507,23 @@
         }
 
         @media (max-width: 480px) {
-            .jar-container {
-                width: 170px;
-                height: 240px;
+            .scene-wrapper {
+                flex-direction: row;
+                /* Mobilde YAN YANA */
+                align-items: center;
+                gap: 2px;
+                /* Super sikisik */
+                margin-top: 20px;
             }
 
-            .main-title {
+            .year-text {
                 font-size: 3.5rem;
-                top: 3%;
+                display: block;
+            }
+
+            .jar-container {
+                width: 140px;
+                height: 200px;
             }
 
             .draw-btn {
@@ -459,17 +550,22 @@
         <i class="fa-solid fa-arrow-left"></i> Ana Sayfa
     </a>
 
-
-
     <!-- Canvas for Snow -->
     <canvas id="snowCanvas"></canvas>
 
-    <!-- Jar -->
-    <div class="jar-container">
-        <div class="lid"></div>
-        <div class="jar">
-            <div class="notes-area" id="notesArea"></div>
+    <!-- WRAPPER: Yazilar ve Kavanoz -->
+    <div class="scene-wrapper">
+        <div class="year-text">20</div>
+
+        <!-- Jar -->
+        <div class="jar-container" id="jarContainer">
+            <div class="lid" id="lid"></div>
+            <div class="jar">
+                <div class="notes-area" id="notesArea"></div>
+            </div>
         </div>
+
+        <div class="year-text">26</div>
     </div>
 
     <button class="draw-btn" id="drawBtn">Kart Çek</button>
@@ -480,6 +576,9 @@
             <p class="wish-text" id="wishText">...</p>
         </div>
     </div>
+
+    <!-- Wishes Data -->
+    <script src="../js/wishes.js"></script>
 
     <script>
         // Snowfall Logic
@@ -550,21 +649,16 @@
 
         // Jar Notes Logic
         const notesArea = document.getElementById('notesArea');
-        const noteCount = 300; // Dengeli sayi, esit dagilim
+        const noteCount = 300;
 
         function fillJar() {
             notesArea.innerHTML = '';
             for (let i = 0; i < noteCount; i++) {
                 const note = document.createElement('div');
                 note.classList.add('paper-note');
-
-                // Tam dagilim icin rastgele pozisyonlar
-                // Kenarlardan biraz bosluk birakarak (daha dogal gorunum)
                 const left = 5 + Math.random() * 90;
                 const top = 10 + Math.random() * 85;
-
                 const rotate = Math.random() * 360;
-
                 note.style.left = left + '%';
                 note.style.top = top + '%';
                 note.style.transform = `rotate(${rotate}deg)`;
@@ -573,66 +667,64 @@
         }
         fillJar();
 
-        // Wishes
-        const wishes = [
-            "Yeni yılın sevdiklerinle hep birlikte olasın",
-            "Tüm hayallerin gerçek olsun",
-            "Sağlık dolu bir yıl geçiresin",
-            "Mutluluk kapını hep çalsın",
-            "Gülümseyen yüzler seni hep kucaklasın",
-            "Bereketin hiç eksilmesin",
-            "Sevgi dolu bir yıl olsun",
-            "Huzur her anında olsun",
-            "Yeni yılda yeni başlangıçlar olsun",
-            "Kalbindeki tüm dilekler kabul olsun",
-            "Başarılarını arttıralım",
-            "Ailenle güzel anılar biriktiresin",
-            "Her gün bir mucize yaşasın",
-            "Yolun hep açık olsun",
-            "Neşen hiç eksilmesin",
-            "Umutların hep yeşersin",
-            "Sevdiklerinle gülmeye devam et",
-            "Her sabah mutlu uyanasın",
-            "Şans hep yanında olsun",
-            "Kalbindeki ışık hiç sönmesin",
-            "Yeni yılda sürprizler seni bekliyor olsun",
-            "Her şey gönlünce olsun",
-            "Güzel günler seninle olsun",
-            "Hayatın rengarenk olsun",
-            "Sevgi ve barış içinde yaşasın",
-            "Yeni yılın tüm kapıları sana açılsın",
-            "Hep iyilerle karşılaşasın",
-            "Yüreğin hep sıcak kalsın",
-            "Bolluk ve bereketin eksilmesin",
-            "Mutluluğun hiç bitmesin"
-        ];
-
         // Drawing Logic
         const drawBtn = document.getElementById('drawBtn');
         const overlay = document.getElementById('overlay');
         const card = document.getElementById('card');
         const wishText = document.getElementById('wishText');
+        const jarContainer = document.getElementById('jarContainer');
+
+        let isDrawing = false;
 
         drawBtn.addEventListener('click', () => {
-            const notes = document.querySelectorAll('.paper-note');
-            const randomNote = notes[Math.floor(Math.random() * notes.length)];
+            if (isDrawing) return;
+            isDrawing = true;
 
-            const flying = randomNote.cloneNode(true);
-            flying.classList.add('flying-note');
-            notesArea.appendChild(flying);
+            const currentWishes = window.wishesData || [
+                { text: "Yeni yıl sana umut getirsin" },
+                { text: "Her şey gönlünce olsun" }
+            ];
 
-            randomNote.style.opacity = '0';
+            // 1. Shake Jar
+            jarContainer.classList.add('shaking');
 
+            // Stop shaking after 500ms
             setTimeout(() => {
-                const wish = wishes[Math.floor(Math.random() * wishes.length)];
-                wishText.textContent = wish;
-                overlay.classList.add('active');
+                jarContainer.classList.remove('shaking');
 
+                // 2. Open Lid
+                jarContainer.classList.add('open');
+
+                // 3. Create Rising Note
                 setTimeout(() => {
-                    flying.remove();
-                    randomNote.style.opacity = '1';
-                }, 500);
-            }, 800);
+                    const risingNote = document.createElement('div');
+                    risingNote.classList.add('rising-note');
+                    jarContainer.appendChild(risingNote);
+
+                    // Force reflow
+                    void risingNote.offsetWidth;
+
+                    // Add animation class
+                    risingNote.classList.add('animate');
+
+                    // 4. Show Card after note rises
+                    setTimeout(() => {
+                        const randomWish = currentWishes[Math.floor(Math.random() * currentWishes.length)];
+                        wishText.textContent = randomWish.text;
+                        overlay.classList.add('active');
+
+                        // Cleanup (remove note, close jar, reset flag)
+                        setTimeout(() => {
+                            risingNote.remove();
+                            jarContainer.classList.remove('open');
+                            isDrawing = false;
+                        }, 1000);
+
+                    }, 800); // Wait for rise animation partway
+
+                }, 400); // Lid opening delay
+
+            }, 500); // Shake duration
         });
 
         // Close Card
