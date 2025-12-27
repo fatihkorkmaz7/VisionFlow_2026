@@ -218,6 +218,31 @@
             border-color: var(--primary);
             background: rgba(var(--primary-hue), 100%, 65%, 0.05);
         }
+
+        /* Notification animations */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -253,43 +278,161 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
-        <div class="container">
-            <div class="section__header" style="margin-bottom: 2rem; text-align: left; max-width: 100%;">
-                <h1 class="section__title">Vision Board <span class="text-gradient">2026</span></h1>
-                <p class="section__description">Hayallerini buraya sürükle ve geleceğini tasarla.</p>
-            </div>
+    <main class="section vb-section" style="padding-top: calc(var(--header-height) + 1rem); min-height: 100vh;">
+        <div class="container vb-container">
+            <!-- Sidebar Panel -->
+            <aside class="vb-sidebar glass fade-in-left">
+                <div class="vb-sidebar__header">
+                    <h3><i class="fa-solid fa-layer-group"></i> KATEGORİ SEÇ</h3>
+                </div>
 
-            <!-- Toolbar -->
-            <div class="toolbar fade-in-up">
-                <div class="toolbar__group">
-                    <button class="btn btn--primary btn--sm" id="add-image-btn">
-                        <i class="fa-solid fa-image"></i> Resim Ekle
+                <div class="vb-categories-grid">
+                    <!-- 2026 Özel Kategori - Yatay -->
+                    <button class="vb-cat-btn vb-cat-btn--wide" data-category="2026">
+                        <img src="../assets/icons/icon_2026.png" alt="2026" class="cat-icon">
                     </button>
-                    <button class="btn btn--outline btn--sm" id="add-text-btn">
-                        <i class="fa-solid fa-font"></i> Not Ekle
+
+                    <button class="vb-cat-btn" data-category="health">
+                        <img src="../assets/icons/icon_health_balloon.png" alt="Sağlık" class="cat-icon">
+                        <span>Sağlık</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="love">
+                        <img src="../assets/icons/icon_love_balloon.png" alt="Aşk" class="cat-icon">
+                        <span>Aşk</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="career">
+                        <img src="../assets/icons/icon_career_balloon.png" alt="Kariyer" class="cat-icon">
+                        <span>Kariyer</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="finance">
+                        <img src="../assets/icons/icon_finance_balloon.png" alt="Finans" class="cat-icon">
+                        <span>Finans</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="travel">
+                        <img src="../assets/icons/icon_travel_balloon.png" alt="Seyahat" class="cat-icon">
+                        <span>Seyahat</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="family">
+                        <img src="../assets/icons/icon_family_balloon.png" alt="Aile" class="cat-icon">
+                        <span>Aile</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="hobbies">
+                        <img src="../assets/icons/icon_hobbies_balloon.png" alt="Hobiler" class="cat-icon">
+                        <span>Hobiler</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="quotes">
+                        <img src="../assets/icons/icon_quotes_balloon.png" alt="İlham Veren Sözler" class="cat-icon">
+                        <span>İlham Veren Sözler</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="education">
+                        <img src="../assets/icons/icon_education_balloon.png" alt="Eğitim" class="cat-icon">
+                        <span>Eğitim</span>
+                    </button>
+                    <button class="vb-cat-btn" data-category="social">
+                        <img src="../assets/icons/icon_social_balloon.png" alt="Sosyal Hayat" class="cat-icon">
+                        <span>Sosyal Hayat</span>
                     </button>
                 </div>
 
-                <div class="toolbar__divider"></div>
+                <div class="vb-divider"></div>
 
-                <div class="toolbar__group">
-                    <button class="btn btn--outline btn--sm" id="clear-board-btn">
-                        <i class="fa-solid fa-trash"></i> Temizle
-                    </button>
-                    <button class="btn btn--outline btn--sm" id="save-board-btn">
-                        <i class="fa-solid fa-save"></i> Kaydet
+                <div class="vb-sidebar__header">
+                    <h3><i class="fa-regular fa-image"></i> GÖRSEL EKLE</h3>
+                </div>
+
+                <div class="vb-upload-area">
+                    <input type="file" id="file-upload" class="hidden-input" accept="image/*" multiple>
+                    <label for="file-upload" class="btn btn--primary btn--full">
+                        <i class="fa-regular fa-folder-open"></i> Bilgisayardan Yükle
+                    </label>
+
+                    <div class="vb-url-input-wrapper">
+                        <input type="text" id="url-input" class="form-input" placeholder="Görsel URL'si girin...">
+                    </div>
+
+                    <button id="add-url-btn" class="btn btn--soft btn--full">
+                        <i class="fa-solid fa-link"></i> URL'den Ekle
                     </button>
                 </div>
-            </div>
+
+                <div class="vb-divider"></div>
+
+                <!-- Droppable Assets Area -->
+                <div class="vb-assets-area" id="assets-area">
+                    <p class="text-muted text-sm text-center">Bir kategori seçin veya görsel yükleyin.</p>
+                    <div class="assets-grid" id="assets-grid">
+                        <!-- Dynamic assets will be loaded here -->
+                    </div>
+                </div>
+            </aside>
 
             <!-- Board Area -->
-            <div class="board-container fade-in-up delay-100" id="vision-board">
-                <!-- Items will be added here dynamically -->
-                <div class="board-item" draggable="true">
-                    <img src="https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2?auto=format&fit=crop&w=400&q=80"
-                        alt="Sample">
-                    <div class="board-item__delete"><i class="fa-solid fa-times"></i></div>
+            <div class="vb-board-wrapper fade-in-up delay-100">
+                <div class="vb-board-header">
+                    <div>
+                        <h1 class="vb-title">Vision Board <span class="text-gradient">2026</span></h1>
+                        <p class="vb-subtitle">Hayallerini buraya sürükle ve tasarla.</p>
+                    </div>
+                    <div class="vb-header-controls">
+                        <div class="vb-actions">
+                            <!-- Template Selector -->
+                            <div class="template-selector">
+                                <button class="template-btn" id="template-toggle" title="Şablon Seç">
+                                    <i class="fa-solid fa-table-cells-large"></i>
+                                    <span>Şablon</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </button>
+                                <div class="template-dropdown" id="template-dropdown">
+                                    <div class="template-option active" data-template="grid">
+                                        <div class="template-preview template-preview--grid">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <span>Klasik Grid</span>
+                                    </div>
+                                    <div class="template-option" data-template="polaroid">
+                                        <div class="template-preview template-preview--polaroid">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <span>Polaroid</span>
+                                    </div>
+                                    <div class="template-option" data-template="table">
+                                        <div class="template-preview template-preview--table">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <span>Tablo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn--outline btn--icon" id="clear-board-btn" title="Temizle">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="btn btn--primary btn--icon" id="save-board-btn" title="Kaydet">
+                                <i class="fa-solid fa-save"></i>
+                            </button>
+                            <button class="btn btn--primary btn--icon" id="download-board-btn" title="İndir"
+                                style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="board-container" id="vision-board">
+                    <!-- Drops will happen here -->
+                    <div class="board-placeholder" id="board-placeholder">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p>Görselleri buraya sürükleyip bırakın</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -352,9 +495,400 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="../js/utils/storage.js"></script>
     <script src="../js/app.js"></script>
-    <script src="../js/modules/visionboard.js"></script>
+    <script>
+        // Vision Board JavaScript - Inline version
+        console.log('VisionBoard inline script loaded!');
+
+        // Drag Drop Manager
+        class DragDropManager {
+            constructor(boardId) {
+                console.log('DragDropManager initialized with boardId:', boardId);
+                this.board = document.getElementById(boardId);
+                this.placeholder = document.getElementById('board-placeholder');
+                this.init();
+            }
+
+            init() {
+                if (!this.board) return;
+                this.board.addEventListener('dragover', (e) => this.handleDragOver(e));
+                this.board.addEventListener('dragleave', (e) => this.handleDragLeave(e));
+                this.board.addEventListener('drop', (e) => this.handleDrop(e));
+            }
+
+            handleDragOver(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+                this.board.classList.add('drag-over');
+            }
+
+            handleDragLeave(e) {
+                this.board.classList.remove('drag-over');
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                this.board.classList.remove('drag-over');
+                if (this.placeholder) this.placeholder.style.display = 'none';
+                const imageUrl = e.dataTransfer.getData('text/plain');
+                if (imageUrl) {
+                    this.addImageToBoard(imageUrl);
+                    return;
+                }
+                const files = e.dataTransfer.files;
+                if (files && files.length > 0) this.handleFiles(files);
+            }
+
+            handleFiles(files) {
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => this.addImageToBoard(e.target.result);
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            addImageToBoard(src) {
+                const item = document.createElement('div');
+                item.className = 'board-item';
+                item.draggable = true;
+                const rotation = Math.random() * 6 - 3;
+                item.style.transform = `rotate(${rotation}deg)`;
+                item.innerHTML = `<img src="${src}" alt="Vision Item"><div class="board-item__delete"><i class="fa-solid fa-times"></i></div>`;
+                item.querySelector('.board-item__delete').addEventListener('click', () => {
+                    item.remove();
+                    this.checkEmptyState();
+                });
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', src);
+                    item.classList.add('dragging');
+                });
+                this.board.appendChild(item);
+            }
+
+            checkEmptyState() {
+                if (this.board.querySelectorAll('.board-item').length === 0) {
+                    if (this.placeholder) this.placeholder.style.display = 'block';
+                }
+            }
+        }
+
+        // Vision Board Main Class
+        class VisionBoard {
+            constructor() {
+                console.log('VisionBoard constructor called');
+                this.boardId = 'vision-board';
+                this.assetsGrid = document.getElementById('assets-grid');
+                this.categoryBtns = document.querySelectorAll('.vb-cat-btn');
+                this.dragDropManager = new DragDropManager(this.boardId);
+
+                // Local Assets Data - mapped from assets folder
+                this.assets = {
+                    health: [
+                        '../assets/Saglik/b530c903911965dd00891c30653c8939.jpg',
+                        '../assets/Saglik/f71632a0f4afd7964296b7390f895d38.jpg'
+                    ],
+                    love: [
+                        '../assets/Ask/472b9d93edb641c3830924f57ef6e524.jpg',
+                        '../assets/Ask/9d3f76a33494860fed1f6500539224f1.jpg'
+                    ],
+                    career: [
+                        '../assets/Kariyer/9df8a66f5465297b17e0b86072b6493d.jpg',
+                        '../assets/Kariyer/aa921170285944a2a6e9122f0c6bd29c.jpg',
+                        '../assets/Kariyer/afed346eaf62ee0cb36bea93debeb216.jpg'
+                    ],
+                    finance: [
+                        '../assets/Finans/0e9e516bb8b75293d839824b7c56b4db.jpg',
+                        '../assets/Finans/605e0302a096d2bb60945078f137a9bb.jpg',
+                        '../assets/Finans/8be3eea129068edbe90ce059b4f42d9e.jpg',
+                        '../assets/Finans/8d0c53de90ad215393dd9e15c463db30.jpg',
+                        '../assets/Finans/d9b344a7ae1a42c849803753c2eed773.jpg'
+                    ],
+                    travel: [
+                        '../assets/Seyahat/3ba262008be146010197d998eefd5ff2.jpg',
+                        '../assets/Seyahat/42275cbc627b3d5a6d105c4fdf695897.jpg',
+                        '../assets/Seyahat/4350a3f314f79ea74d13df4b18b4cf96.jpg',
+                        '../assets/Seyahat/7e83b121ee359f91a2b8220fcc2e0351.jpg',
+                        '../assets/Seyahat/84e3a71effe1a7010284f46164262617.jpg',
+                        '../assets/Seyahat/a7329457024b53534b39c901a4d2c4ad.jpg',
+                        '../assets/Seyahat/b45c6d99f30caf0e4b2627e976285ddc.jpg',
+                        '../assets/Seyahat/b6247a7e16886b81a2d7df29a3f8eb74.jpg',
+                        '../assets/Seyahat/ec927e592be3152780053fd3bc3c13b5.jpg'
+                    ],
+                    family: [
+                        '../assets/Aile/03325a1ef921ea5e550d2e76ab25bd2c.jpg',
+                        '../assets/Aile/b2f52e1e7c3235d7bae42554c3f1819d.jpg',
+                        '../assets/Aile/f348a134a38599eccc17d9a1828d103d.jpg'
+                    ],
+                    hobbies: [
+                        '../assets/Hobiler/ae3476b91deb90530deb9d57ff044c24.jpg'
+                    ],
+                    quotes: [
+                        '../assets/ Ilham Veren Sozler/cc1ed182d86ca77f06c050cfa7fa5f40.jpg'
+                    ],
+                    education: [
+                        '../assets/Egitim/98220edce909476f12ac055691c84b93.jpg'
+                    ],
+                    social: [
+                        '../assets/Sosyal Hayat/8526d98b816a2c695cad21a443362887.jpg'
+                    ],
+                    '2026': [
+                        '../assets/2026/b746484163aa8cd92a4ab2b8ab521d78.jpg',
+                        '../assets/2026/f8371ba6d4af29247ea5d5d93f63e2db.jpg'
+                    ]
+                };
+                this.init();
+            }
+
+            init() {
+                console.log('VisionBoard init called, categoryBtns count:', this.categoryBtns.length);
+                this.initCategorySelection();
+                this.initFileUpload();
+                this.initUrlInput();
+                this.initActions();
+                this.loadAssets('2026');
+                if (this.categoryBtns.length > 0) this.categoryBtns[0].classList.add('active');
+            }
+
+            initCategorySelection() {
+                this.categoryBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        console.log('Category clicked:', btn.dataset.category);
+                        this.categoryBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.loadAssets(btn.dataset.category);
+                    });
+                });
+            }
+
+            loadAssets(category) {
+                console.log('Loading assets for category:', category);
+                if (!this.assetsGrid) {
+                    console.error('assetsGrid not found!');
+                    return;
+                }
+                this.assetsGrid.innerHTML = '';
+                const images = this.assets[category] || [];
+                console.log('Found', images.length, 'images for category', category);
+
+                if (images.length === 0) {
+                    this.assetsGrid.innerHTML = '<p class="text-muted text-sm">Bu kategoride görsel bulunamadı.</p>';
+                    return;
+                }
+
+                images.forEach(src => {
+                    const item = document.createElement('div');
+                    item.className = 'asset-item';
+                    item.draggable = true;
+                    item.innerHTML = `<img src="${src}" alt="${category}">`;
+                    item.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', src));
+                    item.addEventListener('click', () => this.dragDropManager.addImageToBoard(src));
+                    this.assetsGrid.appendChild(item);
+                });
+            }
+
+            initFileUpload() {
+                const fileInput = document.getElementById('file-upload');
+                if (fileInput) {
+                    fileInput.addEventListener('change', (e) => {
+                        if (e.target.files.length > 0) {
+                            this.dragDropManager.handleFiles(e.target.files);
+                            fileInput.value = '';
+                        }
+                    });
+                }
+            }
+
+            initUrlInput() {
+                const urlInput = document.getElementById('url-input');
+                const addBtn = document.getElementById('add-url-btn');
+                const addUrl = () => {
+                    const url = urlInput.value.trim();
+                    if (url) {
+                        this.dragDropManager.addImageToBoard(url);
+                        urlInput.value = '';
+                    }
+                };
+                if (addBtn) addBtn.addEventListener('click', addUrl);
+                if (urlInput) urlInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addUrl(); });
+            }
+
+            initActions() {
+                const clearBtn = document.getElementById('clear-board-btn');
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', () => {
+                        if (confirm('Vision Board\'u temizlemek istediğinize emin misiniz?')) {
+                            const board = document.getElementById(this.boardId);
+                            board.querySelectorAll('.board-item').forEach(item => item.remove());
+                            this.dragDropManager.checkEmptyState();
+                        }
+                    });
+                }
+                const saveBtn = document.getElementById('save-board-btn');
+                if (saveBtn) saveBtn.addEventListener('click', () => alert('Vision Board kaydedildi! (Demo)'));
+
+                // Download Board
+                const downloadBtn = document.getElementById('download-board-btn');
+                if (downloadBtn) {
+                    downloadBtn.addEventListener('click', () => this.downloadBoard());
+                }
+
+                // Template selector
+                this.initTemplateSelector();
+            }
+
+            async downloadBoard() {
+                const board = document.getElementById(this.boardId);
+                const downloadBtn = document.getElementById('download-board-btn');
+
+                // Check if board has items
+                const items = board.querySelectorAll('.board-item');
+                if (items.length === 0) {
+                    alert('İndirilecek görsel bulunamadı. Lütfen önce board\'a görsel ekleyin.');
+                    return;
+                }
+
+                // Show loading state
+                const originalContent = downloadBtn.innerHTML;
+                downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                downloadBtn.disabled = true;
+
+                try {
+                    // Hide placeholder during capture
+                    const placeholder = document.getElementById('board-placeholder');
+                    if (placeholder) placeholder.style.display = 'none';
+
+                    // Hide delete buttons during capture
+                    const deleteButtons = board.querySelectorAll('.board-item__delete');
+                    deleteButtons.forEach(btn => btn.style.display = 'none');
+
+                    // Capture the board as canvas
+                    const canvas = await html2canvas(board, {
+                        backgroundColor: '#1a1a2e',
+                        scale: 2, // Higher quality
+                        useCORS: true,
+                        logging: false,
+                        allowTaint: true
+                    });
+
+                    // Restore delete buttons
+                    deleteButtons.forEach(btn => btn.style.display = '');
+
+                    // Create download link
+                    const link = document.createElement('a');
+                    const date = new Date().toLocaleDateString('tr-TR').replace(/\./g, '-');
+                    link.download = `VisionBoard-2026-${date}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+
+                    // Show success notification
+                    this.showNotification('Vision Board başarıyla indirildi! 🎉', 'success');
+
+                } catch (error) {
+                    console.error('Download error:', error);
+                    this.showNotification('İndirme sırasında bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+                } finally {
+                    // Restore button state
+                    downloadBtn.innerHTML = originalContent;
+                    downloadBtn.disabled = false;
+                }
+            }
+
+            showNotification(message, type = 'success') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `vb-notification vb-notification--${type}`;
+                notification.innerHTML = `
+                    <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                `;
+
+                // Style the notification
+                Object.assign(notification.style, {
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    padding: '1rem 1.5rem',
+                    borderRadius: '12px',
+                    background: type === 'success'
+                        ? 'linear-gradient(135deg, #10b981, #059669)'
+                        : 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+                    zIndex: '9999',
+                    animation: 'slideInRight 0.3s ease-out',
+                    fontWeight: '500'
+                });
+
+                document.body.appendChild(notification);
+
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            initTemplateSelector() {
+                const templateToggle = document.getElementById('template-toggle');
+                const templateDropdown = document.getElementById('template-dropdown');
+                const templateOptions = document.querySelectorAll('.template-option');
+                const board = document.getElementById(this.boardId);
+
+                // Set default template
+                board.classList.add('template-grid');
+
+                // Toggle dropdown
+                if (templateToggle) {
+                    templateToggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        templateDropdown.classList.toggle('show');
+                    });
+                }
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', () => {
+                    if (templateDropdown) templateDropdown.classList.remove('show');
+                });
+
+                // Template selection
+                templateOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const template = option.dataset.template;
+
+                        // Remove all template classes
+                        board.classList.remove('template-grid', 'template-polaroid', 'template-table');
+
+                        // Add new template class
+                        board.classList.add(`template-${template}`);
+
+                        // Update active state
+                        templateOptions.forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+
+                        // Close dropdown
+                        templateDropdown.classList.remove('show');
+
+                        console.log('Template changed to:', template);
+                    });
+                });
+            }
+
+        }
+
+        // Initialize on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, creating VisionBoard...');
+            new VisionBoard();
+        });
+    </script>
 </body>
 
 </html>
