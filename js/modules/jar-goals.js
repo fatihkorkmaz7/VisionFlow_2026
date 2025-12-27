@@ -152,6 +152,9 @@ function initJarGoals() {
         document.getElementById('random-note-meta').innerText = `${formatDate(note.date)} • ${getCategoryName(note.category)}`;
 
         openModal(randomNoteModal);
+
+        // Log activity for dashboard
+        logActivity('jar_note_opened', `Kavanozdan bir anı hatırlandı: "${note.text.substring(0, 30)}..."`);
     }
 
     function saveNotes() {

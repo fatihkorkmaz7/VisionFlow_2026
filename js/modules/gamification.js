@@ -156,8 +156,8 @@ function initGamification() {
         }
 
         if (welcomeMessage) {
-            const levelName = getCurrentLevel().name;
-            welcomeMessage.innerHTML = `${greeting}, <span>${levelName}!</span>`;
+            // Kullanıcı isteği üzerine seviye ismi yerine motive edici bir hitap kullanıyoruz
+            welcomeMessage.innerHTML = `${greeting}, <span>Bugün Senin Günün!</span>`;
         }
         if (welcomeSubtitle) welcomeSubtitle.textContent = subtitle;
     }

@@ -510,6 +510,7 @@
                 this.board = document.getElementById(boardId);
                 this.placeholder = document.getElementById('board-placeholder');
                 this.init();
+                this.loadFromStorage();
             }
 
             init() {
@@ -552,28 +553,80 @@
                 });
             }
 
-            addImageToBoard(src) {
+            addImageToBoard(src, savedData = null) {
                 const item = document.createElement('div');
                 item.className = 'board-item';
                 item.draggable = true;
-                const rotation = Math.random() * 6 - 3;
+
+                const rotation = savedData ? savedData.rotation : (Math.random() * 6 - 3);
                 item.style.transform = `rotate(${rotation}deg)`;
+                item.dataset.rotation = rotation;
+
+                const addedAt = savedData ? savedData.addedAt : new Date().toISOString();
+                item.dataset.addedAt = addedAt;
+
                 item.innerHTML = `<img src="${src}" alt="Vision Item"><div class="board-item__delete"><i class="fa-solid fa-times"></i></div>`;
+
                 item.querySelector('.board-item__delete').addEventListener('click', () => {
                     item.remove();
                     this.checkEmptyState();
+                    this.saveBoardState();
                 });
+
                 item.addEventListener('dragstart', (e) => {
                     e.dataTransfer.setData('text/plain', src);
                     item.classList.add('dragging');
                 });
+
                 this.board.appendChild(item);
+
+                if (this.placeholder) this.placeholder.style.display = 'none';
+
+                if (!savedData) {
+                    this.saveBoardState();
+                    this.logActivity(addedAt);
+                }
             }
 
             checkEmptyState() {
                 if (this.board.querySelectorAll('.board-item').length === 0) {
                     if (this.placeholder) this.placeholder.style.display = 'block';
                 }
+            }
+
+            saveBoardState() {
+                const items = [];
+                this.board.querySelectorAll('.board-item').forEach(item => {
+                    const img = item.querySelector('img');
+                    items.push({
+                        src: img.src,
+                        rotation: item.dataset.rotation,
+                        addedAt: item.dataset.addedAt
+                    });
+                });
+                Storage.save('visionBoardItems', items);
+            }
+
+            loadFromStorage() {
+                const items = Storage.get('visionBoardItems') || [];
+                if (items.length > 0) {
+                    if (this.placeholder) this.placeholder.style.display = 'none';
+                    items.forEach(item => {
+                        this.addImageToBoard(item.src, item);
+                    });
+                }
+            }
+
+            logActivity(timestamp) {
+                const activity = {
+                    type: 'vision_added',
+                    text: 'Vision Board\'a yeni görsel eklendi',
+                    timestamp: timestamp
+                };
+                const logs = Storage.get('activityLog') || [];
+                logs.unshift(activity);
+                if (logs.length > 50) logs.pop();
+                Storage.save('activityLog', logs);
             }
         }
 
@@ -1045,9 +1098,9 @@
                 const notification = document.createElement('div');
                 notification.className = `vb-notification vb-notification--${type}`;
                 notification.innerHTML = `
-                    <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-                    <span>${message}</span>
-                `;
+    <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+    <span>${message}</span>
+    `;
 
                 // Style the notification
                 Object.assign(notification.style, {
