@@ -495,7 +495,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- dom-to-image-more: Modern ve CORS-güvenli ekran yakalama kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.4.0/dist/dom-to-image-more.min.js"></script>
     <script src="../js/utils/storage.js"></script>
     <script src="../js/app.js"></script>
     <script>
@@ -938,13 +939,15 @@
                     const deleteButtons = board.querySelectorAll('.board-item__delete');
                     deleteButtons.forEach(btn => btn.style.display = 'none');
 
-                    // Capture the board as canvas
-                    const canvas = await html2canvas(board, {
-                        backgroundColor: '#1a1a2e',
-                        scale: 2, // Higher quality
-                        useCORS: true,
-                        logging: false,
-                        allowTaint: true
+                    // Ensure all images are base64 encoded before capture
+                    await this.ensureImagesAsBase64(board);
+
+                    // Use dom-to-image-more for capture (more CORS-friendly)
+                    const dataUrl = await domtoimage.toPng(board, {
+                        quality: 1,
+                        bgcolor: '#1a1a2e',
+                        style: { transform: 'none' },
+                        filter: (node) => !(node.id === 'board-placeholder')
                     });
 
                     // Restore delete buttons
@@ -954,7 +957,7 @@
                     const link = document.createElement('a');
                     const date = new Date().toLocaleDateString('tr-TR').replace(/\./g, '-');
                     link.download = `VisionBoard-2026-${date}.png`;
-                    link.href = canvas.toDataURL('image/png');
+                    link.href = dataUrl;
                     link.click();
 
                     // Show success notification
@@ -962,12 +965,79 @@
 
                 } catch (error) {
                     console.error('Download error:', error);
-                    this.showNotification('İndirme sırasında bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+
+                    // Fallback: Try JPEG format
+                    try {
+                        console.log('Trying JPEG fallback...');
+                        const deleteButtons = board.querySelectorAll('.board-item__delete');
+                        deleteButtons.forEach(btn => btn.style.display = 'none');
+
+                        const dataUrl = await domtoimage.toJpeg(board, {
+                            quality: 0.95,
+                            bgcolor: '#1a1a2e'
+                        });
+
+                        deleteButtons.forEach(btn => btn.style.display = '');
+
+                        const link = document.createElement('a');
+                        const date = new Date().toLocaleDateString('tr-TR').replace(/\./g, '-');
+                        link.download = `VisionBoard-2026-${date}.jpg`;
+                        link.href = dataUrl;
+                        link.click();
+
+                        this.showNotification('Vision Board JPEG olarak indirildi! 🎉', 'success');
+                    } catch (fallbackError) {
+                        console.error('Fallback error:', fallbackError);
+                        this.showNotification('İndirme sırasında bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+                    }
                 } finally {
                     // Restore button state
                     downloadBtn.innerHTML = originalContent;
                     downloadBtn.disabled = false;
                 }
+            }
+
+            // Helper: Convert all board images to base64 before export
+            async ensureImagesAsBase64(board) {
+                const images = board.querySelectorAll('.board-item img');
+                const promises = [];
+                images.forEach(img => {
+                    if (!img.src.startsWith('data:')) {
+                        promises.push(this.convertImageToBase64(img));
+                    }
+                });
+                await Promise.all(promises);
+            }
+
+            // Helper: Convert single image to base64 using fetch
+            async convertImageToBase64(img) {
+                return new Promise((resolve) => {
+                    fetch(img.src)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                                img.src = reader.result;
+                                resolve();
+                            };
+                            reader.onerror = () => resolve();
+                            reader.readAsDataURL(blob);
+                        })
+                        .catch(() => {
+                            // Canvas fallback for same-origin images
+                            try {
+                                const canvas = document.createElement('canvas');
+                                canvas.width = img.naturalWidth || img.width;
+                                canvas.height = img.naturalHeight || img.height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0);
+                                img.src = canvas.toDataURL('image/jpeg', 0.9);
+                            } catch (e) {
+                                console.warn('Could not convert image to base64:', e);
+                            }
+                            resolve();
+                        });
+                });
             }
 
             showNotification(message, type = 'success') {
