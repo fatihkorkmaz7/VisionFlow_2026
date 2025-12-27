@@ -67,6 +67,49 @@
             border-radius: var(--radius-lg);
             padding: 1rem 1.5rem;
             text-align: center;
+        }
+
+        .date-card .day {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .date-card .month-year {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .countdown-mini {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+
+        .countdown-mini .days {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .countdown-mini .label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
             padding: 1.5rem;
             position: relative;
