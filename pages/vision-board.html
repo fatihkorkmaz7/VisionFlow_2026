@@ -218,6 +218,31 @@
             border-color: var(--primary);
             background: rgba(var(--primary-hue), 100%, 65%, 0.05);
         }
+
+        /* Notification animations */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -398,6 +423,10 @@
                             <button class="btn btn--primary btn--icon" id="save-board-btn" title="Kaydet">
                                 <i class="fa-solid fa-save"></i>
                             </button>
+                            <button class="btn btn--primary btn--icon" id="download-board-btn" title="İndir"
+                                style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -470,6 +499,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="../js/utils/storage.js"></script>
     <script src="../js/app.js"></script>
     <script>
@@ -704,8 +734,109 @@
                 const saveBtn = document.getElementById('save-board-btn');
                 if (saveBtn) saveBtn.addEventListener('click', () => alert('Vision Board kaydedildi! (Demo)'));
 
+                // Download Board
+                const downloadBtn = document.getElementById('download-board-btn');
+                if (downloadBtn) {
+                    downloadBtn.addEventListener('click', () => this.downloadBoard());
+                }
+
                 // Template selector
                 this.initTemplateSelector();
+            }
+
+            async downloadBoard() {
+                const board = document.getElementById(this.boardId);
+                const downloadBtn = document.getElementById('download-board-btn');
+
+                // Check if board has items
+                const items = board.querySelectorAll('.board-item');
+                if (items.length === 0) {
+                    alert('İndirilecek görsel bulunamadı. Lütfen önce board\'a görsel ekleyin.');
+                    return;
+                }
+
+                // Show loading state
+                const originalContent = downloadBtn.innerHTML;
+                downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                downloadBtn.disabled = true;
+
+                try {
+                    // Hide placeholder during capture
+                    const placeholder = document.getElementById('board-placeholder');
+                    if (placeholder) placeholder.style.display = 'none';
+
+                    // Hide delete buttons during capture
+                    const deleteButtons = board.querySelectorAll('.board-item__delete');
+                    deleteButtons.forEach(btn => btn.style.display = 'none');
+
+                    // Capture the board as canvas
+                    const canvas = await html2canvas(board, {
+                        backgroundColor: '#1a1a2e',
+                        scale: 2, // Higher quality
+                        useCORS: true,
+                        logging: false,
+                        allowTaint: true
+                    });
+
+                    // Restore delete buttons
+                    deleteButtons.forEach(btn => btn.style.display = '');
+
+                    // Create download link
+                    const link = document.createElement('a');
+                    const date = new Date().toLocaleDateString('tr-TR').replace(/\./g, '-');
+                    link.download = `VisionBoard-2026-${date}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+
+                    // Show success notification
+                    this.showNotification('Vision Board başarıyla indirildi! 🎉', 'success');
+
+                } catch (error) {
+                    console.error('Download error:', error);
+                    this.showNotification('İndirme sırasında bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+                } finally {
+                    // Restore button state
+                    downloadBtn.innerHTML = originalContent;
+                    downloadBtn.disabled = false;
+                }
+            }
+
+            showNotification(message, type = 'success') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `vb-notification vb-notification--${type}`;
+                notification.innerHTML = `
+                    <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                `;
+
+                // Style the notification
+                Object.assign(notification.style, {
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    padding: '1rem 1.5rem',
+                    borderRadius: '12px',
+                    background: type === 'success'
+                        ? 'linear-gradient(135deg, #10b981, #059669)'
+                        : 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+                    zIndex: '9999',
+                    animation: 'slideInRight 0.3s ease-out',
+                    fontWeight: '500'
+                });
+
+                document.body.appendChild(notification);
+
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
             }
 
             initTemplateSelector() {
