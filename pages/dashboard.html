@@ -67,51 +67,6 @@
             border-radius: var(--radius-lg);
             padding: 1rem 1.5rem;
             text-align: center;
-        }
-
-        .date-card .day {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .date-card .month-year {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .countdown-mini {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: var(--radius-lg);
-            padding: 1rem 1.5rem;
-            text-align: center;
-        }
-
-        .countdown-mini .days {
-            font-size: 2rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .countdown-mini .label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
             padding: 1.5rem;
             position: relative;
@@ -966,7 +921,23 @@
     <script src="../js/utils/storage.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/modules/gamification.js"></script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__brand">
+                <a href="../index.html" class="footer__logo">
+                    <i class="fa-solid fa-layer-group"></i> VisionFlow
+                </a>
+            </div>
+            <p class="footer__text">
+                Hedeflerini belirle, hayallerini görselleştir ve başarıya giden yolda her adımda yanında ol.
+            </p>
+            <div class="footer__copyright">
+                <p>&copy; 2026 VisionFlow. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
-
