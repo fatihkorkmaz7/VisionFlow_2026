@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initApp() {
     console.log('VisionFlow 2026 Initialized');
-    
+
     setupNavbar();
     setupAnimations();
 }
@@ -45,7 +45,7 @@ function setupNavbar() {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY >= 50) {
             navbar.classList.add('glass');
-            navbar.style.background = 'rgba(10, 10, 15, 0.8)';
+            navbar.style.background = 'var(--bg-card)';
         } else {
             navbar.style.background = 'var(--bg-card)';
         }
@@ -56,7 +56,7 @@ function setupNavbar() {
 function setupAnimations() {
     // Simple Intersection Observer for scroll animations if we want to trigger them on scroll
     // Currently using CSS animations that run on load, but this can be expanded
-    
+
     const observerOptions = {
         root: null,
         rootMargin: '0px',
