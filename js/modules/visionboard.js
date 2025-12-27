@@ -85,9 +85,7 @@ class VisionBoard {
             item.draggable = true;
             item.innerHTML = `<img src="${src}" alt="${category}">`;
 
-            item.addEventListener('dragstart', (e) => {
-                e.dataTransfer.setData('text/plain', src);
-            });
+
 
             this.assetsGrid.appendChild(item);
         });
@@ -110,11 +108,6 @@ class VisionBoard {
         const urlInput = document.getElementById('url-input');
         const addBtn = document.getElementById('add-url-btn');
 
-        const addUrl = () => {
-            const url = urlInput.value.trim();
-            if (url) {
-                this.dragDropManager.addImageToBoard(url);
-                urlInput.value = '';
             }
         };
 
@@ -141,13 +134,23 @@ class VisionBoard {
             });
         }
 
-        // Save Board (Mock)
-        const saveBtn = document.getElementById('save-board-btn');
-        if (saveBtn) {
-            saveBtn.addEventListener('click', () => {
-                alert('Vision Board kaydedildi! (Demo)');
+
             });
         }
+    }
+
+    // Log activity for dashboard tracking
+    function logActivity(type, text) {
+        const activityLog = Storage.get('activityLog') || [];
+        activityLog.push({
+            type,
+            text,
+            timestamp: Date.now()
+        });
+        if (activityLog.length > 100) {
+            activityLog.shift();
+        }
+        Storage.save('activityLog', activityLog);
     }
 }
 
