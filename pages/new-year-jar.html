@@ -35,6 +35,96 @@
             position: relative;
         }
 
+        /* ===== NAVBAR (Sayfa temasina uygun) ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(43, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar__container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar__logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f0e6d2;
+        }
+
+        .navbar__logo i {
+            color: #d4af37;
+        }
+
+        .navbar__logo span {
+            background: linear-gradient(135deg, #d4af37, #f9f1cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar__list {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .navbar__link {
+            color: rgba(240, 230, 210, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .navbar__link:hover {
+            color: #f0e6d2;
+        }
+
+        .navbar__link.active {
+            color: #d4af37;
+        }
+
+        .navbar__link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #d4af37, #f9f1cc);
+            border-radius: 2px;
+        }
+
+        .navbar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #f0e6d2;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Snowfall Canvas */
         #snowCanvas {
             position: fixed;
@@ -46,34 +136,6 @@
             z-index: 1;
         }
 
-        /* Back Button */
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            background: rgba(139, 0, 0, 0.2);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 30px;
-            color: #f0e6d2;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .back-btn:hover {
-            background: rgba(139, 0, 0, 0.3);
-            border-color: rgba(212, 175, 55, 0.6);
-            transform: translateX(-5px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-        }
-
         /* SCENE WRAPPER - Yazilar ve Kavanoz icin kapsayici */
         .scene-wrapper {
             position: relative;
@@ -81,29 +143,22 @@
             align-items: center;
             justify-content: center;
             gap: 40px;
-            /* Yazilarla kavanoz arasi bosluk */
             margin-top: 50px;
             z-index: 10;
         }
 
-        /* Year Text Styles - Kavanozdan BAGIMSIZ */
+        /* Year Text Styles */
         .year-text {
             font-family: 'Playfair Display', serif;
             font-size: 11rem;
-            /* Daha buyuk ve gosterisli */
             font-weight: 700;
             line-height: 1;
-
-            /* Altın Yaldız Gradient (Metalik Doku) */
             background: linear-gradient(to bottom, #e0b62c 0%, #f9f1cc 30%, #e2aa1b 60%, #d4af37 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-
-            /* Yaldız Parlaması (Neon sarı yerine altın glow) */
             filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
             text-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
-
             animation: textGlow 3s ease-in-out infinite alternate;
             pointer-events: none;
             user-select: none;
@@ -126,11 +181,9 @@
             position: relative;
             width: 260px;
             height: 280px;
-            /* Floating effect */
             animation: floatJar 6s ease-in-out infinite;
         }
 
-        /* Shake Animation Override */
         .jar-container.shaking {
             animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
         }
@@ -178,15 +231,12 @@
             background: radial-gradient(circle at 30% 30%, #5d0000 0%, #2b0000 100%);
             border-radius: 50%;
             border: 4px solid #8b0000;
-            box-shadow:
-                0 25px 50px rgba(0, 0, 0, 0.5),
-                inset 0 0 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
             z-index: 10;
         }
 
-        /* Kavanoz Boynu */
         .jar::before {
             content: '';
             position: absolute;
@@ -210,12 +260,7 @@
             transform: translateX(-50%);
             width: 140px;
             height: 35px;
-            background: linear-gradient(135deg,
-                    #8b0000 0%,
-                    #a52a2a 25%,
-                    #8b0000 50%,
-                    #6b0000 75%,
-                    #8b0000 100%);
+            background: linear-gradient(135deg, #8b0000 0%, #a52a2a 25%, #8b0000 50%, #6b0000 75%, #8b0000 100%);
             border-radius: 6px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             z-index: 20;
@@ -224,7 +269,6 @@
             transform-origin: left bottom;
         }
 
-        /* Lid Open State */
         .jar-container.open .lid {
             transform: translateX(-50%) translateY(-30px) rotate(-25deg);
         }
@@ -272,21 +316,13 @@
             position: absolute;
             width: 8px;
             height: 35px;
-            background: linear-gradient(90deg,
-                    #e0d5a0 0%,
-                    #fffff0 20%,
-                    #ffffff 50%,
-                    #fffff0 80%,
-                    #e0d5a0 100%);
+            background: linear-gradient(90deg, #e0d5a0 0%, #fffff0 20%, #ffffff 50%, #fffff0 80%, #e0d5a0 100%);
             border-radius: 4px;
-            box-shadow:
-                0 2px 4px rgba(0, 0, 0, 0.25),
-                inset 1px 0 2px rgba(180, 160, 100, 0.2),
-                inset -1px 0 2px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), inset 1px 0 2px rgba(180, 160, 100, 0.2), inset -1px 0 2px rgba(255, 255, 255, 0.6);
             transition: transform 0.3s, opacity 0.3s;
         }
 
-        /* Rising Note Animation Element */
+        /* Rising Note Animation */
         .rising-note {
             position: absolute;
             top: 0px;
@@ -295,11 +331,9 @@
             height: 60px;
             background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            /* Initial state: behind the jar neck */
             transform: translate(-50%, 20px) scale(0.2) rotate(10deg);
             opacity: 0;
             z-index: 15;
-            /* Front of Jar body (10), Behind Lid (20) */
             border-radius: 2px;
             display: flex;
             align-items: center;
@@ -307,7 +341,6 @@
         }
 
         .rising-note::after {
-            /* Fold effect */
             content: '';
             position: absolute;
             top: 0;
@@ -339,7 +372,6 @@
             100% {
                 transform: translate(-50%, -150px) scale(1) rotate(0deg);
                 opacity: 0;
-                /* Fade out as overlay takes over */
             }
         }
 
@@ -360,10 +392,7 @@
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow:
-                0 6px 25px rgba(220, 20, 60, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                0 0 30px rgba(220, 20, 60, 0.3);
+            box-shadow: 0 6px 25px rgba(220, 20, 60, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 30px rgba(220, 20, 60, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -375,10 +404,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.3),
-                    transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: 0.6s;
         }
 
@@ -386,10 +412,7 @@
             background: linear-gradient(135deg, rgba(220, 20, 60, 1), rgba(178, 34, 34, 1));
             border-color: rgba(255, 150, 150, 0.8);
             transform: translateY(-3px);
-            box-shadow:
-                0 10px 35px rgba(220, 20, 60, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                0 0 40px rgba(220, 20, 60, 0.5);
+            box-shadow: 0 10px 35px rgba(220, 20, 60, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 40px rgba(220, 20, 60, 0.5);
         }
 
         .draw-btn:hover::before {
@@ -431,10 +454,7 @@
             padding: 50px 40px;
             border-radius: 20px;
             text-align: center;
-            box-shadow:
-                0 30px 90px rgba(0, 0, 0, 0.7),
-                0 0 0 1px rgba(212, 175, 55, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 1);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255, 255, 255, 1);
             transform: scale(0.6) translateY(50px);
             opacity: 0;
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -484,9 +504,16 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .navbar__list {
+                display: none;
+            }
+
+            .navbar__toggle {
+                display: block;
+            }
+
             .scene-wrapper {
                 gap: 15px;
-                /* Mobilde daha sikisik */
             }
 
             .jar-container {
@@ -496,7 +523,6 @@
 
             .year-text {
                 font-size: 6rem;
-                /* Mobilde kucult */
             }
 
             .draw-btn {
@@ -509,10 +535,8 @@
         @media (max-width: 480px) {
             .scene-wrapper {
                 flex-direction: row;
-                /* Mobilde YAN YANA */
                 align-items: center;
                 gap: 2px;
-                /* Super sikisik */
                 margin-top: 20px;
             }
 
@@ -545,10 +569,27 @@
 </head>
 
 <body>
-    <!-- Back Button -->
-    <a href="../index.html" class="back-btn">
-        <i class="fa-solid fa-arrow-left"></i> Ana Sayfa
-    </a>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="../index.html" class="navbar__logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>VisionFlow</span>
+            </a>
+
+            <ul class="navbar__list">
+                <li><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
+                <li><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
+                <li><a href="new-year-jar.html" class="navbar__link active">Yılbaşı Kavanozu</a></li>
+                <li><a href="yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
+                <li><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
+            </ul>
+
+            <button class="navbar__toggle" id="navbar-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
 
     <!-- Canvas for Snow -->
     <canvas id="snowCanvas"></canvas>
