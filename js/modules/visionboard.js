@@ -181,6 +181,12 @@ function initVisionBoard() {
         setupDragEvents(item);
 
         board.appendChild(item);
+
+        // Log activity for dashboard (only for new items, not loaded ones)
+        if (!data.skipLog) {
+            logActivity('vision_added', `Vision Board'a ${data.type === 'image' ? 'görsel' : 'metin'} eklendi`);
+        }
+
         saveItems();
     }
 
@@ -235,9 +241,9 @@ function initVisionBoard() {
             const textDiv = item.querySelector('.board-item__content');
 
             if (img) {
-                currentItems.push({ type: 'image', content: img.src });
+                currentItems.push({ type: 'image', content: img.src, addedAt: Date.now() });
             } else if (textDiv) {
-                currentItems.push({ type: 'text', content: textDiv.innerText });
+                currentItems.push({ type: 'text', content: textDiv.innerText, addedAt: Date.now() });
             }
         });
 
@@ -251,8 +257,22 @@ function initVisionBoard() {
             if (savedItems.length > 0) board.innerHTML = '';
 
             savedItems.forEach(data => {
-                addItem(data);
+                addItem({ ...data, skipLog: true }); // Skip logging for loaded items
             });
         }
+    }
+
+    // Log activity for dashboard tracking
+    function logActivity(type, text) {
+        const activityLog = Storage.get('activityLog') || [];
+        activityLog.push({
+            type,
+            text,
+            timestamp: Date.now()
+        });
+        if (activityLog.length > 100) {
+            activityLog.shift();
+        }
+        Storage.save('activityLog', activityLog);
     }
 }

@@ -77,13 +77,17 @@ function initJarGoals() {
                     text: text,
                     date: date,
                     category: selectedCategory,
-                    color: selectedColor
+                    color: selectedColor,
+                    createdAt: Date.now()
                 };
 
                 addNoteToJar(note);
                 notes.push(note);
                 saveNotes();
                 updateStats();
+
+                // Log activity for dashboard
+                logActivity('jar_note_added', `Kavanoza yeni not eklendi: "${text.substring(0, 30)}..."`);
 
                 // Reset form
                 noteText.value = '';
@@ -188,6 +192,20 @@ function initJarGoals() {
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString('tr-TR', options);
+    }
+
+    // Log activity for dashboard tracking
+    function logActivity(type, text) {
+        const activityLog = Storage.get('activityLog') || [];
+        activityLog.push({
+            type,
+            text,
+            timestamp: Date.now()
+        });
+        if (activityLog.length > 100) {
+            activityLog.shift();
+        }
+        Storage.save('activityLog', activityLog);
     }
 }
 

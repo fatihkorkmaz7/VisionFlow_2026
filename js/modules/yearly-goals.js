@@ -253,6 +253,9 @@ function initYearlyGoals() {
                 updatedAt: Date.now()
             };
             goals.push(goal);
+
+            // Log activity
+            logActivity('goal_created', `"${title}" hedefi oluşturuldu`);
         }
 
         persistGoals();
@@ -308,13 +311,24 @@ function initYearlyGoals() {
             if (sub) {
                 sub.completed = !sub.completed;
 
+                // Set completion timestamp
+                if (sub.completed) {
+                    sub.completedAt = Date.now();
+                    logActivity('subgoal_completed', `"${sub.text}" adımı tamamlandı`);
+                } else {
+                    delete sub.completedAt;
+                }
+
                 // Check if all completed
                 const allCompleted = goal.subgoals.length > 0 && goal.subgoals.every(s => s.completed);
                 if (allCompleted && !goal.completed) {
                     goal.completed = true;
+                    goal.completedAt = Date.now();
+                    logActivity('goal_completed', `"${goal.title}" hedefi tamamlandı! 🎉`);
                     celebrate();
                 } else if (!allCompleted) {
                     goal.completed = false;
+                    delete goal.completedAt;
                 }
 
                 persistGoals();
@@ -506,9 +520,9 @@ function initYearlyGoals() {
                         ${daysRemaining !== null ? `
                             <div class="goal-meta-item ${daysStatus}">
                                 <i class="fa-solid fa-hourglass-half"></i>
-                                ${daysRemaining < 0 ? `${Math.abs(daysRemaining)} gün gecikti` : 
-                                  daysRemaining === 0 ? 'Bugün!' : 
-                                  `${daysRemaining} gün kaldı`}
+                                ${daysRemaining < 0 ? `${Math.abs(daysRemaining)} gün gecikti` :
+                        daysRemaining === 0 ? 'Bugün!' :
+                            `${daysRemaining} gün kaldı`}
                             </div>
                         ` : ''}
                     ` : ''}
@@ -705,5 +719,20 @@ function initYearlyGoals() {
                 });
             }, 200);
         }
+    }
+
+    // Log activity for dashboard tracking
+    function logActivity(type, text) {
+        const activityLog = Storage.get('activityLog') || [];
+        activityLog.push({
+            type,
+            text,
+            timestamp: Date.now()
+        });
+        // Keep only last 100 activities
+        if (activityLog.length > 100) {
+            activityLog.shift();
+        }
+        Storage.save('activityLog', activityLog);
     }
 }
