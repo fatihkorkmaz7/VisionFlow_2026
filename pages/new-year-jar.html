@@ -12,6 +12,8 @@
         rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Mobile Nav CSS -->
+    <link rel="stylesheet" href="../css/mobile-nav.css">
     <style>
         * {
             margin: 0;
@@ -568,7 +570,8 @@
     </style>
 </head>
 
-<body>
+<body class="page-jar">
+    <!-- Navbar -->
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar__container">
@@ -577,17 +580,25 @@
                 <span>VisionFlow</span>
             </a>
 
-            <ul class="navbar__list">
-                <li><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
-                <li><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
-                <li><a href="new-year-jar.html" class="navbar__link active">Yılbaşı Kavanozu</a></li>
-                <li><a href="yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
-                <li><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
-            </ul>
+            <div class="navbar__menu" id="navbar-menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
+                    <li class="navbar__item"><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
+                    <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link active">Yılbaşı
+                            Kavanozu</a></li>
+                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link">Yıllık Hedefler</a></li>
+                    <li class="navbar__item"><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
+                </ul>
+                <button class="navbar__close" id="navbar-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
 
-            <button class="navbar__toggle" id="navbar-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <div class="navbar__actions">
+                <button class="navbar__toggle" id="navbar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -778,6 +789,9 @@
             }
         });
     </script>
+
+    <!-- Mobile Navigation JS -->
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

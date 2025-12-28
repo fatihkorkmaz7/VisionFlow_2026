@@ -285,3 +285,36 @@
         display: none;
     }
 }
+/* ===== Page-Jar Menu Items Visibility Fix ===== */
+@media (max-width: 768px) {
+    .page-jar .navbar__menu.show-menu .navbar__item {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .page-jar .navbar__list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        width: 100%;
+        max-width: 320px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .page-jar .navbar__item {
+        width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+}
+
+/* Hide close button on desktop */
+@media (min-width: 769px) {
+    .navbar__close {
+        display: none !important;
+    }
+}
