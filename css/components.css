@@ -615,3 +615,34 @@
         /* Hide on mobile for simplicity or move to menu */
     }
 }
+/* Mobile Menu Fixes - Appended */
+@media (max-width: 768px) {
+    .navbar__menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: var(--bg-secondary);
+        padding: 6rem 2rem 4rem;
+        transition: var(--transition-normal);
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .navbar__menu.show-menu {
+        right: 0;
+    }
+
+    .navbar__list {
+        width: 100%;
+        align-items: center;
+        gap: 2rem;
+    }
+}
+

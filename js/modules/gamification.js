@@ -887,9 +887,25 @@ function initGamification() {
     }
 
     function getTimeAgo(timestamp) {
-        if (!timestamp) return 'Bilinmiyor';
+        if (!timestamp) return 'Yakın zamanda';
 
-        const seconds = Math.floor((Date.now() - timestamp) / 1000);
+        // Convert string dates to timestamp
+        let time = timestamp;
+        if (typeof timestamp === 'string') {
+            time = new Date(timestamp).getTime();
+        }
+
+        // Validate timestamp
+        if (isNaN(time) || time <= 0) {
+            return 'Yakın zamanda';
+        }
+
+        const seconds = Math.floor((Date.now() - time) / 1000);
+
+        // Handle negative or invalid values
+        if (isNaN(seconds) || seconds < 0) {
+            return 'Yakın zamanda';
+        }
 
         if (seconds < 60) return 'Az önce';
         if (seconds < 3600) return `${Math.floor(seconds / 60)} dakika önce`;
