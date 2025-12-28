@@ -51,6 +51,19 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: -1;
+}
+
 .navbar__container {
     height: 100%;
     display: flex;

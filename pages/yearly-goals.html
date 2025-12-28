@@ -23,7 +23,7 @@
 
     <style>
         /* ===== YEARLY GOALS PAGE STYLES ===== */
-        
+
         /* Stats Section */
         .stats-section {
             display: grid;
@@ -376,10 +376,25 @@
             color: var(--priority-color, var(--text-secondary));
         }
 
-        .badge-priority.low { --priority-bg: rgba(34, 197, 94, 0.15); --priority-color: #22C55E; }
-        .badge-priority.medium { --priority-bg: rgba(234, 179, 8, 0.15); --priority-color: #EAB308; }
-        .badge-priority.high { --priority-bg: rgba(249, 115, 22, 0.15); --priority-color: #F97316; }
-        .badge-priority.critical { --priority-bg: rgba(239, 68, 68, 0.15); --priority-color: #EF4444; }
+        .badge-priority.low {
+            --priority-bg: rgba(34, 197, 94, 0.15);
+            --priority-color: #22C55E;
+        }
+
+        .badge-priority.medium {
+            --priority-bg: rgba(234, 179, 8, 0.15);
+            --priority-color: #EAB308;
+        }
+
+        .badge-priority.high {
+            --priority-bg: rgba(249, 115, 22, 0.15);
+            --priority-color: #F97316;
+        }
+
+        .badge-priority.critical {
+            --priority-bg: rgba(239, 68, 68, 0.15);
+            --priority-color: #EF4444;
+        }
 
         .goal-actions {
             display: flex;
@@ -681,7 +696,9 @@
             color: var(--text-secondary);
         }
 
-        .form-input, .form-textarea, .form-select {
+        .form-input,
+        .form-textarea,
+        .form-select {
             width: 100%;
             padding: 0.75rem 1rem;
             background: var(--bg-tertiary);
@@ -692,7 +709,9 @@
             transition: var(--transition-fast);
         }
 
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
@@ -765,12 +784,29 @@
         }
 
         /* Category Colors */
-        .category-kariyer { --category-color: #8B5CF6; }
-        .category-saglik { --category-color: #10B981; }
-        .category-finans { --category-color: #F59E0B; }
-        .category-egitim { --category-color: #3B82F6; }
-        .category-kisisel { --category-color: #EC4899; }
-        .category-iliskiler { --category-color: #EF4444; }
+        .category-kariyer {
+            --category-color: #8B5CF6;
+        }
+
+        .category-saglik {
+            --category-color: #10B981;
+        }
+
+        .category-finans {
+            --category-color: #F59E0B;
+        }
+
+        .category-egitim {
+            --category-color: #3B82F6;
+        }
+
+        .category-kisisel {
+            --category-color: #EC4899;
+        }
+
+        .category-iliskiler {
+            --category-color: #EF4444;
+        }
 
         /* Category Chart */
         .category-chart {
@@ -808,7 +844,8 @@
                 align-items: stretch;
             }
 
-            .toolbar-left, .toolbar-right {
+            .toolbar-left,
+            .toolbar-right {
                 justify-content: center;
             }
 
@@ -838,7 +875,7 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar glass">
+    <nav class="navbar">
         <div class="container navbar__container">
             <a href="../index.html" class="navbar__logo">
                 <i class="fa-solid fa-layer-group"></i>
@@ -850,7 +887,8 @@
                     <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
                     <li class="navbar__item"><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
                     <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link">Yılbaşı Kavanozu</a></li>
-                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link active">Yıllık Hedefler</a></li>
+                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link active">Yıllık Hedefler</a>
+                    </li>
                     <li class="navbar__item"><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
                 </ul>
                 <button class="navbar__close" id="navbar-close">
@@ -870,7 +908,8 @@
     <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
         <div class="container">
             <!-- Page Header -->
-            <div class="goals-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <div class="goals-header"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
                 <div>
                     <h1 class="section__title">Yıllık <span class="text-gradient">Hedefler</span></h1>
                     <p class="section__description">2026 yılında başarmak istediğin hedefleri belirle ve takip et.</p>
@@ -1033,12 +1072,14 @@
             <form id="goal-form">
                 <div class="form-group">
                     <label class="form-label">Hedef Başlığı *</label>
-                    <input type="text" class="form-input" id="goal-title" placeholder="Örn: İngilizce B2 Seviyesine Gel" required>
+                    <input type="text" class="form-input" id="goal-title" placeholder="Örn: İngilizce B2 Seviyesine Gel"
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Açıklama</label>
-                    <textarea class="form-textarea" id="goal-description" placeholder="Hedefin hakkında kısa bir açıklama..."></textarea>
+                    <textarea class="form-textarea" id="goal-description"
+                        placeholder="Hedefin hakkında kısa bir açıklama..."></textarea>
                 </div>
 
                 <div class="form-row">
@@ -1100,7 +1141,8 @@
         <div class="modal__content" style="max-width: 400px; text-align: center;">
             <div style="font-size: 4rem; margin-bottom: 1rem;">🗑️</div>
             <h3 style="margin-bottom: 0.5rem;">Hedefi Sil</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;" id="delete-goal-name">Bu hedefi silmek istediğine emin misin?</p>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;" id="delete-goal-name">Bu hedefi silmek
+                istediğine emin misin?</p>
             <div class="modal-actions">
                 <button class="btn btn--outline" id="cancel-delete-btn">İptal</button>
                 <button class="btn" style="background: #EF4444; color: white;" id="confirm-delete-btn">
