@@ -29,7 +29,7 @@ Kullanıcıların hayallerini tasarladığı yaratıcı çalışma alanı.
 ![Vision Board Ekran Görüntüsü](assets/vision-board.png)
 
 ### 🏺 Yılbaşı Kavanozu Sayfası
-Anıların biriktirildiği ve animasyonlarla zenginleştirilmiş kavanoz sayfası.
+Kullanıcıların sihirli bir kavanozdan rastgele dilek kartları çekerek 2026 için sürpriz motivasyon mesajları aldığı interaktif sayfa.
 ![Yılbaşı Kavanozu Ekran Görüntüsü](assets/new-year-jar.png)
 
 ### 🎯 Yıllık Hedefler Sayfası
