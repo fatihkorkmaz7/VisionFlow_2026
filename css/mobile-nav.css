@@ -1,0 +1,320 @@
+/* ===== MODERN MOBILE NAVIGATION - Premium Design ===== */
+
+/* Hamburger Button - Animated */
+.navbar__toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+    position: relative;
+}
+
+.hamburger {
+    position: relative;
+    width: 24px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger__line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transform-origin: center;
+}
+
+/* Hamburger Animation to X */
+.navbar__toggle.active .hamburger__line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.navbar__toggle.active .hamburger__line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.navbar__toggle.active .hamburger__line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay */
+.navbar__menu {
+    /* Desktop: normal inline */
+    display: flex;
+    align-items: center;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+
+    /* Show hamburger on mobile */
+    .navbar__toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Hide close button (using hamburger animation instead) */
+    .navbar__close {
+        display: none !important;
+    }
+
+    /* Full-screen Menu Overlay */
+    .navbar__menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        /* Dynamic viewport height for mobile browsers */
+
+        /* Glassmorphism Background */
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        /* Initial Hidden State */
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        /* Flexbox Layout */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        /* Animation */
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+
+        /* Stay on top */
+        z-index: 1050;
+
+        /* Padding for safe areas */
+        padding: 2rem;
+        padding-top: calc(var(--header-height) + 2rem);
+    }
+
+    /* Menu Open State */
+    .navbar__menu.show-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+    }
+
+    /* Navigation List */
+    .navbar__list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        width: 100%;
+        max-width: 320px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Navigation Items with Staggered Animation */
+    .navbar__item {
+        width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    /* Staggered delays when menu opens */
+    .navbar__menu.show-menu .navbar__item {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .navbar__menu.show-menu .navbar__item:nth-child(1) {
+        transition-delay: 0.1s;
+    }
+
+    .navbar__menu.show-menu .navbar__item:nth-child(2) {
+        transition-delay: 0.15s;
+    }
+
+    .navbar__menu.show-menu .navbar__item:nth-child(3) {
+        transition-delay: 0.2s;
+    }
+
+    .navbar__menu.show-menu .navbar__item:nth-child(4) {
+        transition-delay: 0.25s;
+    }
+
+    .navbar__menu.show-menu .navbar__item:nth-child(5) {
+        transition-delay: 0.3s;
+    }
+
+    /* Navigation Links */
+    .navbar__link {
+        display: block;
+        padding: 1rem 1.5rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        text-align: center;
+        text-decoration: none;
+        border-radius: var(--radius-lg);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .navbar__link::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--gradient-primary);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: inherit;
+        z-index: -1;
+    }
+
+    .navbar__link:hover,
+    .navbar__link.active {
+        color: var(--primary);
+    }
+
+    .navbar__link:hover::before,
+    .navbar__link.active::before {
+        opacity: 0.1;
+    }
+
+    /* Active Link Indicator */
+    .navbar__link.active {
+        font-weight: 600;
+    }
+
+    .navbar__link.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 3px;
+        background: var(--gradient-primary);
+        border-radius: 3px;
+    }
+
+    /* Body scroll lock when menu is open */
+    body.menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+}
+
+/* ===== Special Theme for New Year Jar Page ===== */
+.page-jar .navbar__toggle .hamburger__line {
+    background: #f0e6d2;
+}
+
+.page-jar .navbar__menu {
+    background: rgba(43, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+}
+
+.page-jar .navbar__link {
+    color: rgba(240, 230, 210, 0.9);
+}
+
+.page-jar .navbar__link:hover,
+.page-jar .navbar__link.active {
+    color: #d4af37;
+}
+
+.page-jar .navbar__link:hover::before,
+.page-jar .navbar__link.active::before {
+    background: linear-gradient(135deg, #d4af37, #f9f1cc);
+}
+
+.page-jar .navbar__link.active::after {
+    background: linear-gradient(90deg, #d4af37, #f9f1cc);
+}
+
+/* ===== Desktop Reset ===== */
+@media (min-width: 769px) {
+    .navbar__menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+        background: transparent;
+        backdrop-filter: none;
+        padding: 0;
+        height: auto;
+        width: auto;
+        flex-direction: row;
+    }
+
+    .navbar__list {
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .navbar__item {
+        opacity: 1;
+        transform: none;
+    }
+
+    .navbar__link {
+        padding: 0.5rem 0;
+        font-size: 1rem;
+    }
+
+    .navbar__link::before,
+    .navbar__link::after {
+        display: none;
+    }
+}
+/* ===== Page-Jar Menu Items Visibility Fix ===== */
+@media (max-width: 768px) {
+    .page-jar .navbar__menu.show-menu .navbar__item {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .page-jar .navbar__list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        width: 100%;
+        max-width: 320px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .page-jar .navbar__item {
+        width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+}
+
+/* Hide close button on desktop */
+@media (min-width: 769px) {
+    .navbar__close {
+        display: none !important;
+    }
+}

@@ -1,0 +1,1183 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yıllık Hedefler - VisionFlow 2026</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/mobile-nav.css">
+
+    <style>
+        /* ===== YEARLY GOALS PAGE STYLES ===== */
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--stat-color, var(--primary));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--stat-color, var(--primary));
+        }
+
+        .stat-info h4 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Countdown Card */
+        .countdown-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .countdown-card .stat-icon {
+            background: linear-gradient(135deg, var(--primary), #3B82F6);
+            color: white;
+        }
+
+        /* Progress Overview */
+        .progress-overview {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--progress), var(--bg-tertiary) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .progress-circle::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--bg-card);
+            border-radius: 50%;
+        }
+
+        .progress-text {
+            position: relative;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .progress-info {
+            flex: 1;
+        }
+
+        .progress-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .progress-breakdown {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .breakdown-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* Toolbar */
+        .goals-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            background: var(--bg-card);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .filter-select {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary-light);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            padding: 0.25rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .view-btn:hover:not(.active) {
+            color: var(--text-primary);
+        }
+
+        /* Goals Grid */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Goals List View */
+        .goals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .goals-list .goal-card {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+        }
+
+        .goals-list .goal-header {
+            border-bottom: none;
+            border-right: 1px solid var(--border-color);
+            min-width: 250px;
+        }
+
+        .goals-list .goal-body {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .goals-list .subgoals-list {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+
+        .goals-list .goal-progress {
+            min-width: 150px;
+        }
+
+        /* Goal Card */
+        .goal-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            position: relative;
+        }
+
+        .goal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--category-color, var(--primary));
+        }
+
+        .goal-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .goal-card.completed {
+            opacity: 0.7;
+        }
+
+        .goal-card.completed::after {
+            content: '✓ Tamamlandı';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #10B981;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .goal-header {
+            padding: 1.5rem;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.03), transparent);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .goal-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .goal-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .goal-badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+        }
+
+        .badge-category {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--primary);
+        }
+
+        .badge-priority {
+            background: var(--priority-bg, rgba(156, 163, 175, 0.2));
+            color: var(--priority-color, var(--text-secondary));
+        }
+
+        .badge-priority.low {
+            --priority-bg: rgba(34, 197, 94, 0.15);
+            --priority-color: #22C55E;
+        }
+
+        .badge-priority.medium {
+            --priority-bg: rgba(234, 179, 8, 0.15);
+            --priority-color: #EAB308;
+        }
+
+        .badge-priority.high {
+            --priority-bg: rgba(249, 115, 22, 0.15);
+            --priority-color: #F97316;
+        }
+
+        .badge-priority.critical {
+            --priority-bg: rgba(239, 68, 68, 0.15);
+            --priority-color: #EF4444;
+        }
+
+        .goal-actions {
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+
+        .goal-card:hover .goal-actions {
+            opacity: 1;
+        }
+
+        .goal-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .goal-action-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .goal-action-btn.delete:hover {
+            border-color: #EF4444;
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .goal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .goal-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .goal-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .goal-meta-item {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .goal-meta-item i {
+            font-size: 0.9rem;
+        }
+
+        .goal-meta-item.overdue {
+            color: #EF4444;
+        }
+
+        .goal-meta-item.warning {
+            color: #F97316;
+        }
+
+        .goal-meta-item.safe {
+            color: #22C55E;
+        }
+
+        .goal-body {
+            padding: 1.5rem;
+        }
+
+        .subgoals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .subgoals-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .subgoals-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .subgoals-list {
+            margin-bottom: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .subgoal-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            margin-bottom: 0.25rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .subgoal-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-light);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+
+        .subgoal-item.completed .checkbox {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .subgoal-item.completed .checkbox::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+            color: white;
+        }
+
+        .subgoal-text {
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+            font-size: 0.9rem;
+        }
+
+        .subgoal-item.completed .subgoal-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .goal-progress {
+            margin-top: auto;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .goal-progress-bar {
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .goal-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #3B82F6);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: var(--radius-full);
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 2px dashed var(--border-color);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal__content {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            width: 90%;
+            max-width: 550px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: var(--transition-normal);
+        }
+
+        .modal.active .modal__content {
+            transform: translateY(0);
+        }
+
+        .modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal__close {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal__close:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .subgoal-inputs {
+            margin-top: 0.5rem;
+        }
+
+        .subgoal-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subgoal-input-group input {
+            flex: 1;
+        }
+
+        .remove-subgoal-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-subgoal-btn:hover {
+            border-color: #EF4444;
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .add-subgoal-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            margin-top: 0.5rem;
+        }
+
+        .add-subgoal-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+        }
+
+        /* Category Colors */
+        .category-kariyer {
+            --category-color: #8B5CF6;
+        }
+
+        .category-saglik {
+            --category-color: #10B981;
+        }
+
+        .category-finans {
+            --category-color: #F59E0B;
+        }
+
+        .category-egitim {
+            --category-color: #3B82F6;
+        }
+
+        .category-kisisel {
+            --category-color: #EC4899;
+        }
+
+        .category-iliskiler {
+            --category-color: #EF4444;
+        }
+
+        /* Category Chart */
+        .category-chart {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .category-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .goals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .goals-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .toolbar-left,
+            .toolbar-right {
+                justify-content: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-overview {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .category-chart {
+                justify-content: center;
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar__container">
+            <a href="../index.html" class="navbar__logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="text-gradient">VisionFlow</span>
+            </a>
+
+            <div class="navbar__menu" id="navbar-menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a href="../index.html" class="navbar__link">Ana Sayfa</a></li>
+                    <li class="navbar__item"><a href="vision-board.html" class="navbar__link">Vision Board</a></li>
+                    <li class="navbar__item"><a href="new-year-jar.html" class="navbar__link">Yılbaşı Kavanozu</a></li>
+                    <li class="navbar__item"><a href="yearly-goals.html" class="navbar__link active">Yıllık Hedefler</a>
+                    </li>
+                    <li class="navbar__item"><a href="dashboard.html" class="navbar__link">İlerleme</a></li>
+                </ul>
+                <button class="navbar__close" id="navbar-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="navbar__actions">
+                <button class="navbar__toggle" id="navbar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section" style="padding-top: calc(var(--header-height) + 2rem);">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="goals-header"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h1 class="section__title">Yıllık <span class="text-gradient">Hedefler</span></h1>
+                    <p class="section__description">2026 yılında başarmak istediğin hedefleri belirle ve takip et.</p>
+                </div>
+                <button class="btn btn--primary" id="add-goal-btn">
+                    <i class="fa-solid fa-plus"></i> Yeni Hedef
+                </button>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section fade-in-up">
+                <div class="stat-card" style="--stat-color: #8B5CF6;">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="stat-total">0</h4>
+                        <p>Toplam Hedef</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="--stat-color: #10B981;">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="stat-completed">0</h4>
+                        <p>Tamamlanan</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="--stat-color: #F59E0B;">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-spinner"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="stat-inprogress">0</h4>
+                        <p>Devam Eden</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="--stat-color: #EF4444;">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="stat-overdue">0</h4>
+                        <p>Gecikmiş</p>
+                    </div>
+                </div>
+
+                <div class="stat-card countdown-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="stat-remaining-days">365</h4>
+                        <p>Yılın Kalan Günü</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="progress-overview fade-in-up delay-100">
+                <div class="progress-circle" id="total-progress-circle" style="--progress: 0%">
+                    <span class="progress-text" id="total-progress-text">0%</span>
+                </div>
+                <div class="progress-info">
+                    <h3>🎯 Genel İlerleme</h3>
+                    <p>Tüm hedeflerinin ortalama tamamlanma oranı.</p>
+                    <div class="progress-breakdown">
+                        <div class="breakdown-item">
+                            <span class="breakdown-dot" style="background: #10B981;"></span>
+                            <span id="breakdown-completed">0 tamamlandı</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-dot" style="background: #F59E0B;"></span>
+                            <span id="breakdown-inprogress">0 devam ediyor</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-dot" style="background: #EF4444;"></span>
+                            <span id="breakdown-overdue">0 gecikmiş</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-chart" id="category-chart">
+                    <!-- Category breakdown will be added here -->
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="goals-toolbar fade-in-up delay-200">
+                <div class="toolbar-left">
+                    <div class="filter-group">
+                        <span class="filter-label">Kategori:</span>
+                        <select class="filter-select" id="filter-category">
+                            <option value="all">Tümü</option>
+                            <option value="Kariyer">Kariyer</option>
+                            <option value="Sağlık">Sağlık</option>
+                            <option value="Finans">Finans</option>
+                            <option value="Eğitim">Eğitim</option>
+                            <option value="Kişisel">Kişisel Gelişim</option>
+                            <option value="İlişkiler">İlişkiler</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <span class="filter-label">Durum:</span>
+                        <select class="filter-select" id="filter-status">
+                            <option value="all">Tümü</option>
+                            <option value="completed">Tamamlanan</option>
+                            <option value="inprogress">Devam Eden</option>
+                            <option value="overdue">Gecikmiş</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <span class="filter-label">Sırala:</span>
+                        <select class="filter-select" id="sort-by">
+                            <option value="date-desc">En Yeni</option>
+                            <option value="date-asc">En Eski</option>
+                            <option value="deadline-asc">Yaklaşan Deadline</option>
+                            <option value="deadline-desc">Uzak Deadline</option>
+                            <option value="progress-desc">En Çok İlerleme</option>
+                            <option value="progress-asc">En Az İlerleme</option>
+                            <option value="priority-desc">Öncelik (Yüksek→Düşük)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="toolbar-right">
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="view-grid" title="Grid Görünümü">
+                            <i class="fa-solid fa-grip"></i>
+                        </button>
+                        <button class="view-btn" id="view-list" title="Liste Görünümü">
+                            <i class="fa-solid fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals Container -->
+            <div class="goals-grid fade-in-up delay-300" id="goals-container">
+                <!-- Goals will be added here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Goal Modal -->
+    <div class="modal" id="goal-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title" id="modal-title">Yeni Hedef Ekle</h3>
+                <button class="modal__close" id="close-goal-modal">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+
+            <form id="goal-form">
+                <div class="form-group">
+                    <label class="form-label">Hedef Başlığı *</label>
+                    <input type="text" class="form-input" id="goal-title" placeholder="Örn: İngilizce B2 Seviyesine Gel"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea class="form-textarea" id="goal-description"
+                        placeholder="Hedefin hakkında kısa bir açıklama..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Kategori</label>
+                        <select class="form-input" id="goal-category">
+                            <option value="Kariyer">💼 Kariyer</option>
+                            <option value="Sağlık">🏃 Sağlık</option>
+                            <option value="Finans">💰 Finans</option>
+                            <option value="Eğitim">📚 Eğitim</option>
+                            <option value="Kişisel">🌟 Kişisel Gelişim</option>
+                            <option value="İlişkiler">❤️ İlişkiler</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Öncelik</label>
+                        <select class="form-input" id="goal-priority">
+                            <option value="low">🟢 Düşük</option>
+                            <option value="medium" selected>🟡 Orta</option>
+                            <option value="high">🟠 Yüksek</option>
+                            <option value="critical">🔴 Kritik</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Bitiş Tarihi</label>
+                    <input type="date" class="form-input" id="goal-deadline">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Alt Hedefler (Adımlar)</label>
+                    <div class="subgoal-inputs" id="subgoal-inputs">
+                        <div class="subgoal-input-group">
+                            <input type="text" class="form-input subgoal-input" placeholder="Adım 1">
+                            <button type="button" class="remove-subgoal-btn" onclick="this.parentElement.remove()">
+                                <i class="fa-solid fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-subgoal-btn" id="add-subgoal-btn">
+                        <i class="fa-solid fa-plus"></i> Adım Ekle
+                    </button>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn--outline" id="cancel-goal-btn">İptal</button>
+                    <button type="submit" class="btn btn--primary" id="confirm-add-goal">
+                        <i class="fa-solid fa-save"></i> Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal">
+        <div class="modal__content" style="max-width: 400px; text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🗑️</div>
+            <h3 style="margin-bottom: 0.5rem;">Hedefi Sil</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;" id="delete-goal-name">Bu hedefi silmek
+                istediğine emin misin?</p>
+            <div class="modal-actions">
+                <button class="btn btn--outline" id="cancel-delete-btn">İptal</button>
+                <button class="btn" style="background: #EF4444; color: white;" id="confirm-delete-btn">
+                    <i class="fa-solid fa-trash"></i> Evet, Sil
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="../js/utils/storage.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/modules/yearly-goals.js"></script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__brand">
+                <a href="../index.html" class="footer__logo">
+                    <i class="fa-solid fa-layer-group"></i> VisionFlow
+                </a>
+            </div>
+            <p class="footer__text">
+                Hedeflerini belirle, hayallerini görselleştir ve başarıya giden yolda her adımda yanında ol.
+            </p>
+            <div class="footer__copyright">
+                <p>&copy; 2026 VisionFlow. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation Script -->
+    <script src="../js/mobile-nav.js"></script>
+</body>
+
+</html>
